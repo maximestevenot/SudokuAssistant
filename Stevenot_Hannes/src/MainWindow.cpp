@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->action_New, SIGNAL(triggered(bool)), this, SLOT(newGrid()));
     connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(exitApplication()));
-    connect(ui->difficultyComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeDifficulty(int)));
+    connect(ui->newGameButton, SIGNAL(released()), this, SLOT(newGrid()));
 }
 
 MainWindow::~MainWindow()
@@ -19,15 +19,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::newGrid()
 {
+    Controller::Difficulty difficulty = ui->difficultyComboBox->currentIndex();
     throw "Function newGrid not implemented yet";
 }
 
 void MainWindow::exitApplication()
 {
     QApplication::quit();
-}
-
-void MainWindow::changeDifficulty(int)
-{
-    throw "Function newGrid not implemented yet";
 }
