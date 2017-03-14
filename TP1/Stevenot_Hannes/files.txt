@@ -1,0 +1,7 @@
+Makefile
+main.pro
+include/ColorWidget.h
+src/ColorWidget.cpp
+include/MainWidget.h
+src/MainWidget.cpp
+src/main.cpp

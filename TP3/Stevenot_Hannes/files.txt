@@ -1,0 +1,9 @@
+include/mainwindow.h
+src/mainwindow.cpp
+include/billwidget.h
+src/billwidget.cpp
+include/InvoiceModel.h
+src/InvoiceModel.cpp
+src/main.cpp
+
+

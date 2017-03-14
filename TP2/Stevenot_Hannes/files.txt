@@ -1,0 +1,6 @@
+calculatrice.pro
+include/Controller.h
+src/Controller.cpp
+include/mainwindow.h
+src/mainwindow.cpp
+src/main.cpp

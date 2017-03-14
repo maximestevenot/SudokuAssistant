@@ -1,0 +1,13 @@
+*~
+*#
+*.o
+*.out
+main
+*.user
+moc/
+obj/
+*Debug*/
+*Release*/
+qrc_*
+ui_*
+Makefile
