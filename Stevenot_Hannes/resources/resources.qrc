@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/grids">
+        <file alias="Easy">grids/Easy.txt</file>
+        <file alias="Hard">grids/Hard.txt</file>
+        <file alias="Insane">grids/Insane.txt</file>
+        <file alias="Medium">grids/Medium.txt</file>
+    </qresource>
+</RCC>
