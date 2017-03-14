@@ -2,6 +2,7 @@
 #define GRID_H
 
 #include <QList>
+#include <QStringList>
 
 class Grid
 {
@@ -11,6 +12,11 @@ public:
     const static int SIZE = 9;
 
     Grid();
+
+    void load(QList<int>);
+    void load(QStringList);
+
+    void clear();
 
     void setValue(int i, int j, int value);
     int getValue(int i, int j);
@@ -29,4 +35,4 @@ private:
 
 };
 
-#endif // GRID_H
+#endif
