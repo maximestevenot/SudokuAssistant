@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void newGrid();
+    void exitApplication();
+    void changeDifficulty(int);
 };
 
 #endif // MAINWINDOW_H

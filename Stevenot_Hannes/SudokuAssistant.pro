@@ -14,9 +14,11 @@ TEMPLATE = app
 CONFIG  += c++11
 
 SOURCES += src/main.cpp\
-        src/MainWindow.cpp
+        src/MainWindow.cpp \
+    src/Controller.cpp
 
-HEADERS  += include/MainWindow.h
+HEADERS  += include/MainWindow.h \
+    include/Controller.h
 
 FORMS    += ui/MainWindow.ui
 

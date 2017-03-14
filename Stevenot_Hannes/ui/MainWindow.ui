@@ -117,7 +117,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="difficultyComboBox">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -223,20 +223,32 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
+    <addaction name="action_New"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <action name="actionNew">
+  <action name="action_New">
    <property name="text">
     <string>&amp;New...</string>
+   </property>
+   <property name="toolTip">
+    <string>Start a new empty grid</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="action_Quit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit application</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
