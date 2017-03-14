@@ -28,6 +28,30 @@ int Grid::getValue(int i, int j)
     return _tab[i][j].value;
 }
 
+QList<int> Grid::getLine(int index)
+{
+    QList<int> list;
+
+    for (int i = 0; i < SIZE; ++i)
+    {
+        list.append(getValue(index, i));
+    }
+
+    return list;
+}
+
+QList<int> Grid::getColumn(int index)
+{
+    QList<int> list;
+
+    for (int i = 0; i < SIZE; ++i)
+    {
+        list.append(getValue(i, index));
+    }
+
+    return list;
+}
+
 bool Grid::isReadOnly(int i, int j)
 {
     if (i < 0 || j < 0 || i >= SIZE || j > SIZE)
