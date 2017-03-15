@@ -34,7 +34,7 @@ void Grid::load(QList<int> list)
 
 void Grid::load(QStringList list)
 {
-    if (list.size() >= SIZE * SIZE)
+    if (list.size() > SIZE * SIZE)
     {
         throw std::out_of_range("Init list of range");
     }

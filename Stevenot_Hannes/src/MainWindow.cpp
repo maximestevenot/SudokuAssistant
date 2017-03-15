@@ -3,6 +3,9 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <random>
+#include <QDebug>
+#include <QString>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,7 +37,6 @@ void MainWindow::newGrid()
     }
     _grid = new Grid();
     getNewGrid(difficulty);
-    throw "Function newGrid not implemented yet";
 }
 
 void MainWindow::exitApplication()
@@ -45,6 +47,7 @@ void MainWindow::exitApplication()
 void MainWindow::getNewGrid(Controller::Difficulty difficulty)
 {
     QString fileName;
+
     switch (difficulty)
     {
     case Controller::Difficulty_Easy:
@@ -67,14 +70,20 @@ void MainWindow::getNewGrid(Controller::Difficulty difficulty)
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        throw "Can't open the file containing the grid.";
+        throw "Can't open the file containing the grid."; // ne pas jetter d'exception chaines
     }
 
-    int nbLines = file.readLine().toInt();
-    int gridNumber = rand()%nbLines;
+    QTextStream in(&file);
+
+    int nbLines = in.readLine().toInt();
+
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> distribution(1, nbLines);
+    int gridNumber = distribution(generator);
+
     int currentLine = 0;
 
-    QTextStream in(&file);
+    //QTextStream in(&file);
     QString line;
     while (!in.atEnd() && currentLine < gridNumber) {
         line = in.readLine();
@@ -83,4 +92,7 @@ void MainWindow::getNewGrid(Controller::Difficulty difficulty)
     QStringList gridStringList = line.split(" ");
     _grid->load(gridStringList);
     ui->gridNumber->setText("Grid #"+gridNumber);
+
+    file.close();
+
 }
