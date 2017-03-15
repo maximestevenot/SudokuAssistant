@@ -21,8 +21,6 @@ private:
     Ui::MainWindow *ui;
     Grid *_grid;
 
-    void getNewGrid(Controller::Difficulty);
-
 private slots:
     void newGrid();
     void exitApplication();
