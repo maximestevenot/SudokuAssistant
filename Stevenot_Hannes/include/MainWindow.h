@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Controller.h"
+#include "Grid.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +19,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Grid *_grid;
+
+    void getNewGrid(Controller::Difficulty);
+
+private slots:
+    void newGrid();
+    void exitApplication();
 };
 
 #endif // MAINWINDOW_H

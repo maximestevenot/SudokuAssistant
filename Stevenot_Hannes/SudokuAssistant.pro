@@ -15,10 +15,12 @@ CONFIG  += c++11
 
 SOURCES += src/main.cpp\
         src/MainWindow.cpp \
-    src/Grid.cpp
+        src/Grid.cpp \
+        src/Controller.cpp
 
 HEADERS  += include/MainWindow.h \
-    include/Grid.h
+            include/Controller.h \
+            include/Grid.h
 
 FORMS    += ui/MainWindow.ui
 
@@ -26,3 +28,6 @@ MOC_DIR  = moc
 OBJECTS_DIR  = obj
 
 INCLUDEPATH += ./include
+
+RESOURCES += \
+    resources/resources.qrc
