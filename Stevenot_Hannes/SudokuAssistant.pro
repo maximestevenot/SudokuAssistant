@@ -15,10 +15,12 @@ CONFIG  += c++11
 
 SOURCES += src/main.cpp\
         src/MainWindow.cpp \
-    src/Controller.cpp
+        src/Grid.cpp \
+        src/Controller.cpp
 
 HEADERS  += include/MainWindow.h \
-    include/Controller.h
+            include/Controller.h \
+            include/Grid.h
 
 FORMS    += ui/MainWindow.ui
 

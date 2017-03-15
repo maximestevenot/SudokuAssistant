@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 
 #include <QFile>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,7 +26,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::newGrid()
 {
-    Controller::Difficulty difficulty = ui->difficultyComboBox->currentIndex();
+    //Controller::Difficulty difficulty = ui->difficultyComboBox->currentIndex();
+    Controller::Difficulty difficulty = Controller::Difficulty_Easy; //debug
     if (_grid)
     {
         delete _grid;
@@ -43,7 +45,7 @@ void MainWindow::exitApplication()
 void MainWindow::getNewGrid(Controller::Difficulty difficulty)
 {
     QString fileName;
-    switch (diffficulty)
+    switch (difficulty)
     {
     case Controller::Difficulty_Easy:
         fileName = ":/grids/Easy";
@@ -68,7 +70,7 @@ void MainWindow::getNewGrid(Controller::Difficulty difficulty)
         throw "Can't open the file containing the grid.";
     }
 
-    int nbLines = in.readLine().toInt();
+    int nbLines = file.readLine().toInt();
     int gridNumber = rand()%nbLines;
     int currentLine = 0;
 
