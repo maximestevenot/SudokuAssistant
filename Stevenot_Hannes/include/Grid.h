@@ -12,6 +12,7 @@ public:
     const static int SIZE = 9;
 
     Grid();
+    Grid(QStringList);
 
     void load(QList<int>);
     void load(QStringList);

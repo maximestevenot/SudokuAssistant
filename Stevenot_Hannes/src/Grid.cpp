@@ -5,6 +5,11 @@ Grid::Grid()
 {
 }
 
+Grid::Grid(QStringList initList) : Grid()
+{
+    load(initList);
+}
+
 void Grid::load(QList<int> list)
 {
     if (list.size() >= SIZE * SIZE)
@@ -34,7 +39,7 @@ void Grid::load(QList<int> list)
 
 void Grid::load(QStringList list)
 {
-    if (list.size() > SIZE * SIZE)
+    if (list.size() != SIZE * SIZE)
     {
         throw std::out_of_range("Init list of range");
     }
@@ -45,7 +50,7 @@ void Grid::load(QStringList list)
     {
         for (int j = 0; j < SIZE; ++j)
         {
-            if (list[index] == 0)
+            if (list[index] == "0")
             {
                 _tab[i][j].readOnly = false;
             }
