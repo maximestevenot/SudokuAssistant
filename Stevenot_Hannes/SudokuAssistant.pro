@@ -17,12 +17,14 @@ SOURCES += src/main.cpp\
         src/MainWindow.cpp \
         src/Grid.cpp \
         src/Controller.cpp \
-    src/Gridloader.cpp
+    src/Gridloader.cpp \
+    src/SudokuBoardWidget.cpp
 
 HEADERS  += include/MainWindow.h \
             include/Controller.h \
             include/Grid.h \
-    include/Gridloader.h
+    include/Gridloader.h \
+    include/SudokuBoardWidget.h
 
 FORMS    += ui/MainWindow.ui
 
