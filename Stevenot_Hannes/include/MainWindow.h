@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "Controller.h"
-#include "Grid.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,10 +18,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Grid *_grid;
+    Controller * _controller;
 
 private slots:
-    void newGrid();
     void exitApplication();
 };
 
