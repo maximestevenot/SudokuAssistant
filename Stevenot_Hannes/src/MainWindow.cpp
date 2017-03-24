@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "Gridloader.h"
 #include <QString>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,26 +9,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     srand(time(NULL));
 
-    newGrid();
+    initComboBox();
 
-    connect(ui->action_New, SIGNAL(triggered(bool)), this, SLOT(newGrid()));
+    _controller = new Controller();
+    _controller->setDifficulty();
+
+    connect(ui->action_New, SIGNAL(triggered(bool)), _controller, SLOT(newGrid()));
     connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(exitApplication()));
-    connect(ui->newGameButton, SIGNAL(released()), this, SLOT(newGrid()));
+    connect(ui->newGameButton, SIGNAL(released()), _controller, SLOT(newGrid()));
+    connect(ui->difficultyComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _controller, [=](int i){ _controller->setDifficulty(static_cast<Controller::Difficulty>(i)); });
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete _grid;
 }
 
-void MainWindow::newGrid() //Controler must manage grid not View
+void MainWindow::initComboBox()
 {
-//    if (_grid)
-//    {
-//        delete _grid;
-//    }
-//    _grid = GridLoader::getNewGrid(Controller::Difficulty_Easy);
+    for (int diff = 0; diff < Controller::Difficulty_Count; diff++)
+    {
+        ui->difficultyComboBox->addItem(Controller::Difficulty_Level[diff], static_cast<Controller::Difficulty>(diff));
+    }
 }
 
 void MainWindow::exitApplication()

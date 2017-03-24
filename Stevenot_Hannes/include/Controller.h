@@ -1,12 +1,31 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-class Controller
-{
-public:
-    Controller();
+#include <QObject>
+#include <QStringList>
+#include "Grid.h"
 
-    enum Difficulty { Difficulty_Easy = 0, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
+class Controller : public QObject
+{
+    Q_OBJECT
+    Q_ENUMS(Difficulty)
+
+public:
+    enum Difficulty { Difficulty_Easy, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
+    static const QStringList Difficulty_Level;
+
+    Controller();
+    ~Controller();
+
+    Grid * getGrid();
+    void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
+
+public slots:
+    void newGrid();
+
+private:
+    Grid *_grid;
+    Difficulty _currentDifficulty;
 };
 
 #endif // CONTROLLER_H
