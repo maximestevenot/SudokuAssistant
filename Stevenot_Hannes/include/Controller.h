@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <QStringList>
 #include "Grid.h"
 
 class Controller : public QObject
@@ -11,6 +12,7 @@ class Controller : public QObject
 
 public:
     enum Difficulty { Difficulty_Easy, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
+    static const QStringList Difficulty_Level;
 
     Controller();
     ~Controller();

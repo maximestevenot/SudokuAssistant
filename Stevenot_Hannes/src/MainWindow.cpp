@@ -27,10 +27,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::initComboBox()
 {
-    ui->difficultyComboBox->addItem(tr("Easy"), Controller::Difficulty_Easy);
-    ui->difficultyComboBox->addItem(tr("Medium"), Controller::Difficulty_Medium);
-    ui->difficultyComboBox->addItem(tr("Hard"), Controller::Difficulty_Hard);
-    ui->difficultyComboBox->addItem(tr("Insane"), Controller::Difficulty_Insane);
+    for (int diff = 0; diff < Controller::Difficulty_Count; diff++)
+    {
+        ui->difficultyComboBox->addItem(Controller::Difficulty_Level[diff], static_cast<Controller::Difficulty>(diff));
+    }
 }
 
 void MainWindow::exitApplication()

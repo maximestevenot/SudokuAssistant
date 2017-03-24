@@ -1,6 +1,8 @@
 #include "Controller.h"
 #include "Gridloader.h"
 
+const QStringList Controller::Difficulty_Level =  { "Easy", "Medium", "Hard", "Insane" };
+
 Controller::Controller() : QObject()
 {
     _grid = GridLoader::getNewGrid(_currentDifficulty);
