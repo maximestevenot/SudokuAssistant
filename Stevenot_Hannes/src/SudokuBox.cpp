@@ -1,6 +1,7 @@
 #include "SudokuBox.h"
 #include <QPainter>
 #include <QPen>
+#include <QLayout>
 
 SudokuBox::SudokuBox(int i, int j, QWidget *parent) : QWidget(parent)
 {
