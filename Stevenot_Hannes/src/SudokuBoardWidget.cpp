@@ -1,4 +1,4 @@
-#include "include/SudokuBoardWidget.h"
+#include "SudokuBoardWidget.h"
 #include <QPainter>
 
 SudokuBoardWidget::SudokuBoardWidget(QWidget *parent) : QWidget(parent)

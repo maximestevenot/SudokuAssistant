@@ -25,11 +25,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::newGrid() //Controler must manage grid not View
 {
-    if (_grid)
-    {
-        delete _grid;
-    }
-    _grid = GridLoader::getNewGrid(Controller::Difficulty_Easy);
+//    if (_grid)
+//    {
+//        delete _grid;
+//    }
+//    _grid = GridLoader::getNewGrid(Controller::Difficulty_Easy);
 }
 
 void MainWindow::exitApplication()
