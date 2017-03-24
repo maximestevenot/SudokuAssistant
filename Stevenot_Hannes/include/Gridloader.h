@@ -10,7 +10,7 @@
 class GridLoader
 {
 public:
-    static Grid * getNewGrid(Controller::Difficulty difficulty = Controller::Difficulty_Easy);
+    static Grid * getNewGrid(Controller::Difficulty difficulty = static_cast<Controller::Difficulty>(0));
 
 private:
     static QFile * openFile(Controller::Difficulty);

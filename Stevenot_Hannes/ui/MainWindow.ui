@@ -125,31 +125,11 @@
              </size>
             </property>
             <property name="currentText">
-             <string>Easy</string>
+             <string/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>-1</number>
             </property>
-            <item>
-             <property name="text">
-              <string>Easy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Medium</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Hard</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Insane</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item>

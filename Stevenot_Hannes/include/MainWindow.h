@@ -20,6 +20,8 @@ private:
     Ui::MainWindow *ui;
     Controller * _controller;
 
+    void initComboBox();
+
 private slots:
     void exitApplication();
 };
