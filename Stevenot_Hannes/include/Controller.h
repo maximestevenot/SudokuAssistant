@@ -31,6 +31,9 @@ public:
     Grid * getGrid();
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
 
+signals:
+    void onGridChanged();
+
 public slots:
     void newGrid();
 

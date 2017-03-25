@@ -11,28 +11,33 @@
 #include "ActiveSudokuBox.h"
 #include "InactiveSudokuBox.h"
 #include <QPainter>
-#include <QGridLayout>
 #include <QDebug>
 
 namespace SudokuAssistant {
 namespace View {
 
-SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent) {}
+SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
+{
+    _layout = new QGridLayout();
+    setLayout(_layout);
+}
 
-void SudokuBoardWidget::setController(Controller * controller)
+
+void SudokuBoardWidget::initializeWidget(Controller * controller)
 {
     _controller = controller;
+    connect(_controller, SIGNAL(onGridChanged()), this, SLOT(updateGrid()));
+    updateGrid();
 }
 
-void SudokuBoardWidget::initWidget(Controller * controller)
+void SudokuBoardWidget::updateGrid()
 {
-    setController(controller);
-    initWidget();
-}
+    if (!_controller)
+    {
+        return;
+    }
+    deleteBoxes();
 
-void SudokuBoardWidget::initWidget()
-{
-    QGridLayout * layout = new QGridLayout();
     for (int i = 0; i < Grid::SIZE; i++)
     {
         for (int j = 0; j < Grid::SIZE; j++)
@@ -48,17 +53,40 @@ void SudokuBoardWidget::initWidget()
                 box = new ActiveSudokuBox(i, j, value, this);
             }
 
-            layout->addWidget(box, i, j, 1, 1);
+            _boxes[i][j] = box;
+            _layout->addWidget(box, i, j, 1, 1);
             connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(boxesClickAction(int,int)));
         }
     }
-    setLayout(layout);
+}
+
+void SudokuBoardWidget::updateBox(int i, int j, int value)
+{
+    if (_boxes[i][j])
+    {
+        _boxes[i][j]->updateValue(value);
+    }
 }
 
 void SudokuBoardWidget::boxesClickAction(int i, int j)
 {
     qDebug() << "(" << i << "," << j << ") clicked";
     emit onBoxClicked(i,j);
+}
+
+void SudokuBoardWidget::deleteBoxes()
+{
+    for (int i = 0; i < Grid::SIZE; i++)
+    {
+        for (int j = 0; j < Grid::SIZE; j++)
+        {
+            if (_boxes[i][j])
+            {
+                layout()->removeWidget(_boxes[i][j]);
+                delete _boxes[i][j];
+            }
+        }
+    }
 }
 
 void SudokuBoardWidget::paintEvent(QPaintEvent *)

@@ -40,7 +40,9 @@ void Controller::newGrid()
     {
         delete _grid;
     }
+
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+    emit onGridChanged();
 }
 
 }
