@@ -27,6 +27,7 @@ void SudokuBoardWidget::initializeWidget(Controller * controller)
 {
     _controller = controller;
     connect(_controller, SIGNAL(onGridChanged()), this, SLOT(updateGrid()));
+    connect(_controller, SIGNAL(onGridUpdated(int,int,int)), this, SLOT(updateBox(int,int,int)));
     updateGrid();
 }
 

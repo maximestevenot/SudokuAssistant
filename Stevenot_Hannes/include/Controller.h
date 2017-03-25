@@ -33,9 +33,11 @@ public:
 
 signals:
     void onGridChanged();
+    void onGridUpdated(int i, int j, int value);
 
 public slots:
     void newGrid();
+    void updateGrid(int i, int j, int value);
 
 private:
     Grid *_grid;
