@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -22,16 +22,18 @@ class SudokuBox : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit SudokuBox(int i, int j, QWidget * parent = 0);
-    void paintEvent(QPaintEvent *);
+protected:
+    explicit SudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
 
+public:
+    virtual void paintEvent(QPaintEvent *);
     int iIndex();
     int jIndex();
+    int value();
     SudokuBoardWidget* parentBoard();
 
 public slots:
-    virtual void updateValue(int value) = 0;
+    virtual void updateValue(int value);
 
 signals:
     void onMouseClicked(int, int);
@@ -39,6 +41,7 @@ signals:
 private:
     int _i;
     int _j;
+    int _value;
     SudokuBoardWidget * _boardWidget;
 };
 

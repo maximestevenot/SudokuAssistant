@@ -42,7 +42,6 @@ private slots:
 private:
     int _boxSize;
     Controller * _controller;
-    SudokuBox * _boxes[Grid::SIZE][Grid::SIZE];
 };
 
 }

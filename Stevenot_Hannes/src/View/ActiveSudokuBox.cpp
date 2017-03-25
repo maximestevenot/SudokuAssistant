@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -15,33 +15,39 @@
 namespace SudokuAssistant {
 namespace View {
 
-ActiveSudokuBox::ActiveSudokuBox(int i, int j, QWidget *parent) : SudokuBox(i, j, parent) { }
-
-//void ActiveSudokuBox::paintEvent(QPaintEvent * evt)
-//{
-
-//    SudokuBox::paintEvent(evt);
-//}
-
-void ActiveSudokuBox::updateValue(int value)
+ActiveSudokuBox::ActiveSudokuBox(int i, int j, int value, QWidget *parent) : SudokuBox(i, j, value, parent)
 {
-    QPainter painter(this);
+    setCursor(Qt::PointingHandCursor);
+}
 
-    painter.setFont(QFont("Arial", 14, QFont::Bold));
-    painter.setPen(QPen(QColor(Qt::blue)));
+void ActiveSudokuBox::paintEvent(QPaintEvent * evt)
+{
+    SudokuBox::paintEvent(evt);
+
+    QPainter painter(this);
+    painter.setFont(QFont("Arial", 0.3 * width()));
+    painter.setPen(QPen(QColor(Qt::black)));
 
     QString displayedContent;
-    if (value)
+    if (value())
     {
-        displayedContent = QString::number(value);
+        displayedContent = QString::number(value());
     }
     painter.drawText(rect(), Qt::AlignVCenter | Qt::AlignCenter, displayedContent);
+
+    painter.end();
 }
 
 void ActiveSudokuBox::mouseReleaseEvent(QMouseEvent * evt)
 {
     emit onMouseClicked(iIndex(), jIndex());
     evt->accept();
+}
+
+void ActiveSudokuBox::updateValue(int value)
+{
+    SudokuBox::updateValue(value);
+    update();
 }
 
 }

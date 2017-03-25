@@ -3,12 +3,13 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
 #include "SudokuBoardWidget.h"
 #include "ActiveSudokuBox.h"
+#include "InactiveSudokuBox.h"
 #include <QPainter>
 #include <QGridLayout>
 #include <QDebug>
@@ -36,10 +37,19 @@ void SudokuBoardWidget::initWidget()
     {
         for (int j = 0; j < Grid::SIZE; j++)
         {
-            SudokuBox * b = new ActiveSudokuBox(i, j, this);
-            _boxes[i][j] = b;
-            layout->addWidget(b, i, j, 1, 1);
-            connect(b, SIGNAL(onMouseClicked(int,int)), this, SLOT(boxesClickAction(int,int)));
+            int value = _controller->getGrid()->getValue(i,j);
+            SudokuBox * box;
+            if (_controller->getGrid()->isReadOnly(i,j))
+            {
+                box = new InactiveSudokuBox(i, j, value, this);
+            }
+            else
+            {
+                box = new ActiveSudokuBox(i, j, value, this);
+            }
+
+            layout->addWidget(box, i, j, 1, 1);
+            connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(boxesClickAction(int,int)));
         }
     }
     setLayout(layout);
