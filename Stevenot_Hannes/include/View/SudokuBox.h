@@ -1,8 +1,20 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #ifndef SUDOKUBOX_H
 #define SUDOKUBOX_H
 
 #include "SudokuBoardWidget.h"
 #include <QWidget>
+
+namespace SudokuAssistant {
+namespace View {
 
 class SudokuBoardWidget;
 
@@ -30,4 +42,6 @@ private:
     SudokuBoardWidget * _boardWidget;
 };
 
+}
+}
 #endif

@@ -1,9 +1,20 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
 #include <QObject>
 #include <QStringList>
 #include "Grid.h"
+
+namespace SudokuAssistant {
 
 class Controller : public QObject
 {
@@ -28,4 +39,6 @@ private:
     Difficulty _currentDifficulty;
 };
 
-#endif // CONTROLLER_H
+}
+
+#endif

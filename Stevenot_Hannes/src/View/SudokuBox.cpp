@@ -1,7 +1,19 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "SudokuBox.h"
 #include <QPainter>
 #include <QPen>
 #include <QLayout>
+
+namespace SudokuAssistant {
+namespace View {
 
 SudokuBox::SudokuBox(int i, int j, QWidget *parent) : QWidget(parent)
 {
@@ -38,4 +50,7 @@ int SudokuBox::jIndex()
 SudokuBoardWidget *SudokuBox::parentBoard()
 {
     return _boardWidget;
+}
+
+}
 }

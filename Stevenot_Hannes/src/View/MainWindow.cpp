@@ -1,6 +1,18 @@
-#include "MainWindow.h"
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
+s#include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QString>
+
+namespace SudokuAssistant {
+namespace View {
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,4 +50,7 @@ void MainWindow::initComboBox()
 void MainWindow::exitApplication()
 {
     QApplication::quit();
+}
+
+}
 }

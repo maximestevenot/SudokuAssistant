@@ -1,10 +1,19 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "MainWindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    SudokuAssistant::View::MainWindow w;
     w.show();
 
     return a.exec();

@@ -1,5 +1,16 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "Grid.h"
 #include <stdexcept>
+
+namespace SudokuAssistant {
 
 Grid::Grid()
 {
@@ -133,4 +144,6 @@ bool Grid::isReadOnly(int i, int j)
     }
 
     return _tab[i][j].readOnly;
+}
+
 }

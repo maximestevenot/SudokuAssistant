@@ -1,7 +1,19 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "ActiveSudokuBox.h"
 #include <QPainter>
 #include <QPen>
 #include <QFont>
+
+namespace SudokuAssistant {
+namespace View {
 
 ActiveSudokuBox::ActiveSudokuBox(int i, int j, QWidget *parent) : SudokuBox(i, j, parent) { }
 
@@ -30,4 +42,7 @@ void ActiveSudokuBox::mouseReleaseEvent(QMouseEvent * evt)
 {
     emit onMouseClicked(iIndex(), jIndex());
     evt->accept();
+}
+
+}
 }

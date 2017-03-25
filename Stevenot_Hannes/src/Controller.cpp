@@ -1,5 +1,16 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "Controller.h"
 #include "Gridloader.h"
+
+namespace SudokuAssistant {
 
 const QStringList Controller::Difficulty_Level =  { "Easy", "Medium", "Hard", "Insane" };
 
@@ -30,4 +41,6 @@ void Controller::newGrid()
         delete _grid;
     }
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+}
+
 }

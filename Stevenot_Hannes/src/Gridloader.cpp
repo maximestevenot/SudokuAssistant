@@ -1,11 +1,20 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #include "Gridloader.h"
-
 #include <random>
 #include <chrono>
 #include <QFile>
 #include <QTextStream>
 #include <QString>
 
+namespace SudokuAssistant {
 
 Grid * GridLoader::getNewGrid(Controller::Difficulty difficulty)
 {
@@ -75,4 +84,6 @@ QStringList GridLoader::getLine(QTextStream & in, int index)
     } while (!in.atEnd() && currentLine < index);
 
     return line.split(" ");
+}
+
 }

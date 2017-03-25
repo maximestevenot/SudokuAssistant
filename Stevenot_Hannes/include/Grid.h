@@ -1,8 +1,19 @@
+/*
+ * Copyright (C) ENSICAEN 2016-2017
+ * Authors : Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ * 
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
 #ifndef GRID_H
 #define GRID_H
 
 #include <QList>
 #include <QStringList>
+
+namespace SudokuAssistant {
 
 class Grid
 {
@@ -35,5 +46,7 @@ private:
     Cell _tab[SIZE][SIZE];
 
 };
+
+}
 
 #endif

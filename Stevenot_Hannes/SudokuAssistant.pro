@@ -14,28 +14,30 @@ TEMPLATE = app
 CONFIG  += c++11
 
 SOURCES += src/main.cpp\
-        src/MainWindow.cpp \
         src/Grid.cpp \
         src/Controller.cpp \
-    src/Gridloader.cpp \
-    src/SudokuBoardWidget.cpp \
-    src/SudokuBox.cpp \
-    src/ActiveSudokuBox.cpp
+        src/Gridloader.cpp \
+        src/View/ActiveSudokuBox.cpp \
+        src/View/MainWindow.cpp \
+        src/View/SudokuBoardWidget.cpp \
+        src/View/SudokuBox.cpp
 
-HEADERS  += include/MainWindow.h \
+HEADERS  += \
             include/Controller.h \
             include/Grid.h \
-    include/Gridloader.h \
-    include/SudokuBoardWidget.h \
-    include/SudokuBox.h \
-    include/ActiveSudokuBox.h
+            include/Gridloader.h \
+            include/View/ActiveSudokuBox.h \
+            include/View/MainWindow.h \
+            include/View/SudokuBoardWidget.h \
+            include/View/SudokuBox.h
 
 FORMS    += ui/MainWindow.ui
 
 MOC_DIR  = moc
 OBJECTS_DIR  = obj
 
-INCLUDEPATH += ./include
+INCLUDEPATH +=  include \
+                include/View/
 
 RESOURCES += \
     resources/resources.qrc
