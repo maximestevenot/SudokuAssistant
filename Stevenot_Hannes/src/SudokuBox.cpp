@@ -10,16 +10,17 @@ SudokuBox::SudokuBox(int i, int j, QWidget *parent) : QWidget(parent)
     _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
-void SudokuBox::paintEvent(QPaintEvent *)
+void SudokuBox::paintEvent(QPaintEvent * evt)
 {
     QPainter painter(this);
     QPen pen(Qt::SolidLine);
-    pen.setWidth(3);
+    pen.setWidth(1);
     painter.setPen(pen);
 
     resize(_boardWidget->boxSize(), _boardWidget->boxSize());
-    painter.drawRect(rect());
+
     painter.fillRect(rect(), Qt::white);
+    painter.drawRect(rect());
 
     painter.end();
 }

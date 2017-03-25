@@ -9,15 +9,11 @@ class ActiveSudokuBox : public SudokuBox
 
 public:
     explicit ActiveSudokuBox(int i, int j, QWidget * parent = 0);
-    void paintEvent(QPaintEvent *);
+    //void paintEvent(QPaintEvent *);
     void mouseReleaseEvent(QMouseEvent * evt);
 
 public slots:
     void updateValue(int value);
-
-signals:
-    void onMouseClicked(int, int);
-
 };
 
 #endif

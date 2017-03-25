@@ -5,10 +5,11 @@
 
 ActiveSudokuBox::ActiveSudokuBox(int i, int j, QWidget *parent) : SudokuBox(i, j, parent) { }
 
-void ActiveSudokuBox::paintEvent(QPaintEvent * evt)
-{
-    SudokuBox::paintEvent(evt);
-}
+//void ActiveSudokuBox::paintEvent(QPaintEvent * evt)
+//{
+
+//    SudokuBox::paintEvent(evt);
+//}
 
 void ActiveSudokuBox::updateValue(int value)
 {

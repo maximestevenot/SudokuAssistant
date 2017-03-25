@@ -21,6 +21,12 @@ public:
     void initWidget(Controller * controller);
     void initWidget();
 
+signals:
+    void onBoxClicked(int, int);
+
+private slots:
+    void boxesClickAction(int, int);
+
 private:
     int _boxSize;
     Controller * _controller;

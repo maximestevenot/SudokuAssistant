@@ -21,6 +21,9 @@ public:
 public slots:
     virtual void updateValue(int value) = 0;
 
+signals:
+    void onMouseClicked(int, int);
+
 private:
     int _i;
     int _j;
