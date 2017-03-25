@@ -7,7 +7,7 @@
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
-s#include "MainWindow.h"
+#include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QString>
 

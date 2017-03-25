@@ -22,7 +22,7 @@ SudokuBox::SudokuBox(int i, int j, QWidget *parent) : QWidget(parent)
     _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
-void SudokuBox::paintEvent(QPaintEvent * evt)
+void SudokuBox::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QPen pen(Qt::SolidLine);
