@@ -21,33 +21,6 @@ Grid::Grid(QStringList initList) : Grid()
     load(initList);
 }
 
-void Grid::load(QList<int> list)
-{
-    if (list.size() >= SIZE * SIZE)
-    {
-        throw std::out_of_range("Init list of range");
-    }
-
-    int index = 0;
-
-    for (int i = 0; i < SIZE; ++i)
-    {
-        for (int j = 0; j < SIZE; ++j)
-        {
-            if (list[index] == 0)
-            {
-                _tab[i][j].readOnly = false;
-            }
-            else
-            {
-                _tab[i][j].readOnly = true;
-            }
-            _tab[i][j].value = list[index];
-            index++;
-        }
-    }
-}
-
 void Grid::load(QStringList list)
 {
     if (list.size() != SIZE * SIZE)
@@ -83,7 +56,7 @@ void Grid::clear()
         {
             if (! _tab[i][j].readOnly)
             {
-                _tab[i][j].value = 0;
+                setValue(i, j, 0);
             }
         }
     }
@@ -99,6 +72,7 @@ void Grid::setValue(int i, int j, int value)
     if (!_tab[i][j].readOnly)
     {
         _tab[i][j].value = value;
+        emit onValueChanged(i, j, value);
     }
 }
 

@@ -15,10 +15,11 @@
 namespace SudokuAssistant {
 namespace View {
 
-SudokuBox::SudokuBox(int i, int j, QWidget *parent) : QWidget(parent)
+SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
 {
     _i = i;
     _j = j;
+    _value = value;
     _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
@@ -45,6 +46,16 @@ int SudokuBox::iIndex()
 int SudokuBox::jIndex()
 {
     return _j;
+}
+
+int SudokuBox::value()
+{
+    return _value;
+}
+
+void SudokuBox::updateValue(int value)
+{
+    _value = value;
 }
 
 SudokuBoardWidget *SudokuBox::parentBoard()

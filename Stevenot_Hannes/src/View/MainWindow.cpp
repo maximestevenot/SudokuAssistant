@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _controller = new Controller();
     _controller->setDifficulty();
 
-    ui->_sudokuBoard->initWidget(_controller);
+    ui->_sudokuBoard->initializeWidget(_controller);
 
     connect(ui->action_New, SIGNAL(triggered(bool)), _controller, SLOT(newGrid()));
     connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(exitApplication()));

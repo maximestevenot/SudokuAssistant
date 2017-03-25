@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -40,7 +40,18 @@ void Controller::newGrid()
     {
         delete _grid;
     }
+
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+    emit onGridChanged();
+}
+
+void Controller::updateGrid(int i, int j, int value)
+{
+    if (_grid)
+    {
+        _grid->setValue(i, j, value);
+        emit onGridUpdated(i, j, value);
+    }
 }
 
 }
