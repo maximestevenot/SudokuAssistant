@@ -25,13 +25,13 @@ DigitEntry::DigitEntry(int iBox, int jBox, QWidget *parent) : QDialog(parent, Qt
 
 void DigitEntry::onDigitButtonClicked(int buttonId)
 {
-    emit updateBoxRequested(_i, _j, buttonId);
+    emit boxUpdated(_i, _j, buttonId);
     close();
 }
 
 void DigitEntry::onClearButtonClicked()
 {
-    emit clearBoxRequested(_i, _j);
+    emit boxUpdated(_i, _j, 0);
     close();
 }
 

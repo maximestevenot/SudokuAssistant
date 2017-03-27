@@ -24,8 +24,7 @@ public:
     explicit DigitEntry(int iBox, int jBox, QWidget *parent = 0);
 
 signals:
-    void updateBoxRequested(int, int, int);
-    void clearBoxRequested(int, int);
+    void boxUpdated(int, int, int);
 
 public slots:
     void onDigitButtonClicked(int);
