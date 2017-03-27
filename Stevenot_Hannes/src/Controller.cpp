@@ -58,6 +58,7 @@ void Controller::onGridUpdate(int i, int j, int value)
 void Controller::onBoxUpdateRequested(int i, int j)
 {
     View::DigitEntry userInput(i, j);
+    connect(&userInput, SIGNAL(boxUpdated(int,int,int)), this, SLOT(onGridUpdate(int,int,int)));
     userInput.setModal(true);
     userInput.exec();
 }
