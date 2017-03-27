@@ -22,16 +22,15 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
     setLayout(_layout);
 }
 
-
 void SudokuBoardWidget::initializeWidget(Controller * controller)
 {
     _controller = controller;
-    connect(_controller, SIGNAL(onGridChanged()), this, SLOT(updateGrid()));
-    connect(_controller, SIGNAL(onGridUpdated(int,int,int)), this, SLOT(updateBox(int,int,int)));
-    updateGrid();
+    connect(_controller, SIGNAL(gridChanged()), this, SLOT(onGridUpdated()));
+    connect(_controller, SIGNAL(gridUpdated(int,int,int)), this, SLOT(onBoxUpdated(int,int,int)));
+    onGridUpdated();
 }
 
-void SudokuBoardWidget::updateGrid()
+void SudokuBoardWidget::onGridUpdated()
 {
     if (!_controller)
     {
@@ -56,12 +55,12 @@ void SudokuBoardWidget::updateGrid()
 
             _boxes[i][j] = box;
             _layout->addWidget(box, i, j, 1, 1);
-            connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(boxesClickAction(int,int)));
+            connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
         }
     }
 }
 
-void SudokuBoardWidget::updateBox(int i, int j, int value)
+void SudokuBoardWidget::onBoxUpdated(int i, int j, int value)
 {
     if (_boxes[i][j])
     {
@@ -69,10 +68,10 @@ void SudokuBoardWidget::updateBox(int i, int j, int value)
     }
 }
 
-void SudokuBoardWidget::boxesClickAction(int i, int j)
+void SudokuBoardWidget::onBoxClicked(int i, int j)
 {
     qDebug() << "(" << i << "," << j << ") clicked";
-    emit onBoxClicked(i,j);
+    emit boxClicked(i,j);
 }
 
 void SudokuBoardWidget::deleteBoxes()

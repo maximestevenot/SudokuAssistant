@@ -21,7 +21,8 @@ SOURCES += src/main.cpp\
         src/View/MainWindow.cpp \
         src/View/SudokuBoardWidget.cpp \
         src/View/SudokuBox.cpp \
-    src/View/InactiveSudokuBox.cpp
+    src/View/InactiveSudokuBox.cpp \
+    src/View/DigitEntry.cpp
 
 HEADERS  += \
             include/Controller.h \
@@ -31,7 +32,8 @@ HEADERS  += \
             include/View/MainWindow.h \
             include/View/SudokuBoardWidget.h \
             include/View/SudokuBox.h \
-    include/View/InactiveSudokuBox.h
+    include/View/InactiveSudokuBox.h \
+    include/View/DigitEntry.h
 
 FORMS    += ui/MainWindow.ui
 

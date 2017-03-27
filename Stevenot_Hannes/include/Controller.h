@@ -23,6 +23,7 @@ class Controller : public QObject
 
 public:
     enum Difficulty { Difficulty_Easy, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
+
     static const QStringList Difficulty_Level;
 
     Controller();
@@ -32,12 +33,13 @@ public:
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
 
 signals:
-    void onGridChanged();
-    void onGridUpdated(int i, int j, int value);
+    void gridChanged();
+    void gridUpdated(int i, int j, int value);
 
 public slots:
-    void newGrid();
-    void updateGrid(int i, int j, int value);
+    void onNewGrid();
+    void onGridUpdate(int i, int j, int value);
+    void onBoxUpdateRequested(int i, int j);
 
 private:
     Grid *_grid;
