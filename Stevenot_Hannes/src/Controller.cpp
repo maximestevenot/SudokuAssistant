@@ -9,6 +9,7 @@
  */
 #include "Controller.h"
 #include "Gridloader.h"
+#include "DigitEntry.h"
 
 namespace SudokuAssistant {
 
@@ -34,7 +35,7 @@ void Controller::setDifficulty(Controller::Difficulty diff)
     _currentDifficulty = diff;
 }
 
-void Controller::newGrid()
+void Controller::onNewGrid()
 {
     if (_grid)
     {
@@ -42,16 +43,23 @@ void Controller::newGrid()
     }
 
     _grid = GridLoader::getNewGrid(_currentDifficulty);
-    emit onGridChanged();
+    emit gridChanged();
 }
 
-void Controller::updateGrid(int i, int j, int value)
+void Controller::onGridUpdate(int i, int j, int value)
 {
     if (_grid)
     {
         _grid->setValue(i, j, value);
-        emit onGridUpdated(i, j, value);
+        emit gridUpdated(i, j, value);
     }
+}
+
+void Controller::onBoxUpdateRequested(int i, int j)
+{
+    View::DigitEntry userInput(i, j);
+    userInput.setModal(true);
+    userInput.exec();
 }
 
 }

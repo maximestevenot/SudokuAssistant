@@ -33,14 +33,14 @@ public:
     int boxSize();
 
 signals:
-    void onBoxClicked(int, int);
+    void boxClicked(int, int);
 
 public slots:
-    void updateGrid();
-    void updateBox(int i, int j, int value);
+    void onGridUpdated();
+    void onBoxUpdated(int i, int j, int value);
 
 private slots:
-    void boxesClickAction(int, int);
+    void onBoxClicked(int, int);
 
 private:
     int _boxSize;
