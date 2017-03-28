@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
     connect(ui->action_New, SIGNAL(triggered(bool)), _controller, SLOT(onNewGrid()));
+    connect(ui->action_Restart, SIGNAL(triggered(bool)), _controller, SLOT(onClearGrid()));
     connect(ui->newGameButton, SIGNAL(released()), _controller, SLOT(onNewGrid()));
     connect(ui->difficultyComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _controller, [=](int i){ _controller->setDifficulty(static_cast<Controller::Difficulty>(i)); });
 }
