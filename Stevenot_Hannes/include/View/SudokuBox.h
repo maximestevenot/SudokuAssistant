@@ -12,6 +12,7 @@
 
 #include "SudokuBoardWidget.h"
 #include <QWidget>
+#include <QColor>
 
 namespace SudokuAssistant {
 namespace View {
@@ -24,11 +25,13 @@ class SudokuBox : public QWidget
 
 protected:
     explicit SudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
+    virtual void paintEvent(QPaintEvent *);
 
 public:
-    virtual void paintEvent(QPaintEvent *);
     int iIndex();
     int jIndex();
+    const QColor & backgroundColor();
+    void setBackgroundColor(const QColor &);
     int value();
     SudokuBoardWidget* parentBoard();
 
@@ -43,6 +46,7 @@ private:
     int _j;
     int _value;
     SudokuBoardWidget * _boardWidget;
+    QColor _backgroundColor;
 };
 
 }

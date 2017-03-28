@@ -31,6 +31,8 @@ public:
     void paintEvent(QPaintEvent *);
     void initializeWidget(Controller * controller);
     int boxSize();
+    bool hasHeightForWidth();
+    int heightForWidth(int w);
 
 signals:
     void boxClicked(int, int);

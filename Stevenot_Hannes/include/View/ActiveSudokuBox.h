@@ -21,8 +21,13 @@ class ActiveSudokuBox : public SudokuBox
 
 public:
     explicit ActiveSudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
+
+protected:
     void paintEvent(QPaintEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void enterEvent(QEvent *);
+    void leaveEvent(QEvent *);
 
 public slots:
     void updateValue(int value);

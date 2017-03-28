@@ -12,6 +12,7 @@
 #include <QPen>
 #include <QLayout>
 
+
 namespace SudokuAssistant {
 namespace View {
 
@@ -20,6 +21,7 @@ SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
     _i = i;
     _j = j;
     _value = value;
+    _backgroundColor = Qt::white;
     _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
@@ -30,10 +32,10 @@ void SudokuBox::paintEvent(QPaintEvent *)
     pen.setWidth(1);
     painter.setPen(pen);
 
-    resize(_boardWidget->boxSize(), _boardWidget->boxSize());
+    //resize(_boardWidget->boxSize(), _boardWidget->boxSize());
 
-    painter.fillRect(rect(), Qt::white);
-    painter.drawRect(rect());
+    painter.fillRect(rect(), _backgroundColor);
+    painter.drawRect(0,0, width() - 1, height() - 1);
 
     painter.end();
 }
@@ -46,6 +48,16 @@ int SudokuBox::iIndex()
 int SudokuBox::jIndex()
 {
     return _j;
+}
+
+const QColor & SudokuBox::backgroundColor()
+{
+    return _backgroundColor;
+}
+
+void SudokuBox::setBackgroundColor(const QColor & color)
+{
+    _backgroundColor = color;
 }
 
 int SudokuBox::value()

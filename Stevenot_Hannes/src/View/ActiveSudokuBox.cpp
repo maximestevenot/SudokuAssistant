@@ -44,6 +44,27 @@ void ActiveSudokuBox::mouseReleaseEvent(QMouseEvent * evt)
     evt->accept();
 }
 
+void ActiveSudokuBox::mousePressEvent(QMouseEvent * evt)
+{
+    setBackgroundColor(Qt::white);
+    update();
+    evt->accept();
+}
+
+void ActiveSudokuBox::enterEvent(QEvent * evt)
+{
+    setBackgroundColor(Qt::yellow);
+    update();
+    evt->accept();
+}
+
+void ActiveSudokuBox::leaveEvent(QEvent * evt)
+{
+    setBackgroundColor(Qt::white);
+    update();
+    evt->accept();
+}
+
 void ActiveSudokuBox::updateValue(int value)
 {
     SudokuBox::updateValue(value);

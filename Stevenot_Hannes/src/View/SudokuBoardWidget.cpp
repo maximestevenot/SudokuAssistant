@@ -12,6 +12,7 @@
 #include "InactiveSudokuBox.h"
 #include <QPainter>
 #include <QDebug>
+#include <QSizePolicy>
 
 namespace SudokuAssistant {
 namespace View {
@@ -19,7 +20,25 @@ namespace View {
 SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
 {
     _layout = new QGridLayout();
+    _layout->setSpacing(0);
     setLayout(_layout);
+
+    QSizePolicy p(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    p.setHeightForWidth(true);
+    setSizePolicy(p);
+    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+}
+
+bool SudokuBoardWidget::hasHeightForWidth()
+{
+    qDebug() << "call hasHeightForWidth()";
+    return true;
+}
+
+int SudokuBoardWidget::heightForWidth(int w)
+{
+    qDebug() << "call heightForWidth(int)";
+    return w;
 }
 
 void SudokuBoardWidget::initializeWidget(Controller * controller)
@@ -58,6 +77,7 @@ void SudokuBoardWidget::onGridUpdated()
             connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
         }
     }
+
 }
 
 void SudokuBoardWidget::onBoxUpdated(int i, int j, int value)
@@ -91,18 +111,18 @@ void SudokuBoardWidget::deleteBoxes()
 
 void SudokuBoardWidget::paintEvent(QPaintEvent *)
 {
-    int size = qMin(width(), height());
-    _boxSize = size / Grid::SIZE;
+    //    int size = qMin(width(), height());
+    //    _boxSize = size / Grid::SIZE;
 
-    resize(size, size);
+    //    resize(size, size);
 
-    //    QPainter painter(this);
-    //    QPen pen(Qt::SolidLine);
-    //    pen.setWidth(7);
-    //    painter.setPen(pen);
-    //    painter.fillRect(rect(), Qt::yellow);
-    //    painter.drawRect(rect());
-    //    painter.end();
+    //        QPainter painter(this);
+    //        QPen pen(Qt::SolidLine);
+    //        pen.setWidth(7);
+    //        painter.setPen(pen);
+    //        painter.fillRect(rect(), Qt::yellow);
+    //        painter.drawRect(rect());
+    //        painter.end();
 }
 
 
