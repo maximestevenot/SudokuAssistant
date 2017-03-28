@@ -32,8 +32,6 @@ void SudokuBox::paintEvent(QPaintEvent *)
     pen.setWidth(1);
     painter.setPen(pen);
 
-    //resize(_boardWidget->boxSize(), _boardWidget->boxSize());
-
     painter.fillRect(rect(), _backgroundColor);
     painter.drawRect(0,0, width() - 1, height() - 1);
 

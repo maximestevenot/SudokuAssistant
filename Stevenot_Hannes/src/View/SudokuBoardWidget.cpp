@@ -109,27 +109,5 @@ void SudokuBoardWidget::deleteBoxes()
     }
 }
 
-void SudokuBoardWidget::paintEvent(QPaintEvent *)
-{
-    //    int size = qMin(width(), height());
-    //    _boxSize = size / Grid::SIZE;
-
-    //    resize(size, size);
-
-    //        QPainter painter(this);
-    //        QPen pen(Qt::SolidLine);
-    //        pen.setWidth(7);
-    //        painter.setPen(pen);
-    //        painter.fillRect(rect(), Qt::yellow);
-    //        painter.drawRect(rect());
-    //        painter.end();
-}
-
-
-int SudokuBoardWidget::boxSize()
-{
-    return _boxSize;
-}
-
 }
 }
