@@ -170,6 +170,7 @@
      <string>File</string>
     </property>
     <addaction name="action_New"/>
+    <addaction name="action_Restart"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
@@ -195,6 +196,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_Restart">
+   <property name="text">
+    <string>&amp;Restart</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear the grid</string>
    </property>
   </action>
  </widget>

@@ -85,4 +85,10 @@ void Controller::onGridUpdate(int i, int j, int value)
     }
 }
 
+void Controller::onClearGrid()
+{
+    _grid->clear();
+    emit gridChanged();
+}
+
 }
