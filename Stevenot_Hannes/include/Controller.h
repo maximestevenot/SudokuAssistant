@@ -39,7 +39,6 @@ signals:
 public slots:
     void onNewGrid();
     void onGridUpdate(int i, int j, int value);
-    void onBoxUpdateRequested(int i, int j);
 
 private:
     Grid *_grid;

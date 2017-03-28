@@ -9,7 +9,6 @@
  */
 #include "Controller.h"
 #include "Gridloader.h"
-#include "DigitEntry.h"
 
 namespace SudokuAssistant {
 
@@ -53,14 +52,6 @@ void Controller::onGridUpdate(int i, int j, int value)
         _grid->setValue(i, j, value);
         emit gridUpdated(i, j, value);
     }
-}
-
-void Controller::onBoxUpdateRequested(int i, int j)
-{
-    View::DigitEntry userInput(i, j);
-    connect(&userInput, SIGNAL(boxUpdated(int,int,int)), this, SLOT(onGridUpdate(int,int,int)));
-    userInput.setModal(true);
-    userInput.exec();
 }
 
 }

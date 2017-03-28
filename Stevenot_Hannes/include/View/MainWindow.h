@@ -28,6 +28,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+        void onBoxUpdateRequested(int i, int j);
+
 private:
     Ui::MainWindow *ui;
     Controller * _controller;
