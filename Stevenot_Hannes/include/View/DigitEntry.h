@@ -12,6 +12,7 @@
 
 #include <QDialog>
 #include <QList>
+#include "Controller.h"
 
 namespace SudokuAssistant {
 namespace View {
@@ -21,7 +22,7 @@ class DigitEntry : public QDialog
     Q_OBJECT
 
 public:
-    explicit DigitEntry(int iBox, int jBox, QWidget *parent = 0);
+    explicit DigitEntry(int iBox, int jBox, Controller * controller, QWidget *parent = 0);
 
 signals:
     void boxUpdated(int, int, int);
@@ -33,6 +34,7 @@ public slots:
 private:
     int _i;
     int _j;
+    Controller * _controller;
 
     void initButtons();
 };

@@ -9,6 +9,7 @@
  */
 #include "Controller.h"
 #include "Gridloader.h"
+#include <QtMath>
 
 namespace SudokuAssistant {
 
@@ -32,6 +33,36 @@ Grid *Controller::getGrid()
 void Controller::setDifficulty(Controller::Difficulty diff)
 {
     _currentDifficulty = diff;
+}
+
+QList<int> Controller::getPossibleValues(int l, int c)
+{
+    QList<int> values;
+    for (int i = 1; i < 10; i++)
+    {
+        values.append(i);
+    }
+
+    for (int i = 0; i < Grid::SIZE; i++)
+    {
+        values.removeAll(_grid->getValue(l,i));
+        values.removeAll(_grid->getValue(i,c));
+    }
+
+    int boxSize = qSqrt(Grid::SIZE);
+    for (int i = 0; i < boxSize; i++)
+    {
+        for (int j = 0; j < boxSize; j++)
+        {
+            if (i != l % boxSize && j != c % boxSize)
+            {
+                values.removeAll(_grid->getValue(i + (int) l / boxSize, j + (int) c / boxSize));
+            }
+        }
+    }
+
+    values.append(0);
+    return values;
 }
 
 void Controller::onNewGrid()
