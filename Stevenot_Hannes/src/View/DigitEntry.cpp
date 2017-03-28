@@ -15,11 +15,12 @@
 namespace SudokuAssistant {
 namespace View {
 
-DigitEntry::DigitEntry(int iBox, int jBox, QWidget *parent) : QDialog(parent, Qt::Popup)
+DigitEntry::DigitEntry(int iBox, int jBox, Controller * controller, QWidget *parent) : QDialog(parent, Qt::Popup)
 {
     setModal(true);
     _i = iBox;
     _j = jBox;
+    _controller = controller;
     initButtons();
 }
 
@@ -42,12 +43,17 @@ void DigitEntry::initButtons()
     const char * shortcuts[] = {"1","2","3","4","5","6","7","8","9"};
 
     int buttonId = 1;
+    QList<int> possibleValues = _controller->getPossibleValues(_i, _j);
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
             QPushButton* tempButton = new QPushButton(QString::number(buttonId));
             tempButton->setShortcut(tr(shortcuts[buttonId - 1]));
+            if (!possibleValues.contains(buttonId))
+            {
+                tempButton->setEnabled(false);
+            }
             grid->addWidget(tempButton, i, j);
             group->addButton(tempButton, buttonId);
             buttonId++;

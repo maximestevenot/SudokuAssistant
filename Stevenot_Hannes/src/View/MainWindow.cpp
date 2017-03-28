@@ -53,7 +53,7 @@ void MainWindow::initComboBox()
 
 void MainWindow::onBoxUpdateRequested(int i, int j)
 {
-    View::DigitEntry userInput(i, j);
+    View::DigitEntry userInput(i, j, _controller);
     connect(&userInput, SIGNAL(boxUpdated(int,int,int)), _controller, SLOT(onGridUpdate(int,int,int)));
     userInput.setModal(true);
     QPoint popupPos(QCursor::pos().x() + userInput.width() / 10, QCursor::pos().y() + userInput.height() / 10);

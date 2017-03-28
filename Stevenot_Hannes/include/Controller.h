@@ -12,6 +12,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QList>
 #include "Grid.h"
 
 namespace SudokuAssistant {
@@ -31,6 +32,8 @@ public:
 
     Grid * getGrid();
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
+
+    QList<int> getPossibleValues(int l, int c);
 
 signals:
     void gridChanged();
