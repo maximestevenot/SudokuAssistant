@@ -13,6 +13,8 @@
 #include <QPainter>
 #include <QDebug>
 #include <QSizePolicy>
+#include <QFrame>
+#include <QLayoutItem>
 
 namespace SudokuAssistant {
 namespace View {
@@ -21,12 +23,12 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
 {
     _layout = new QGridLayout();
     _layout->setSpacing(0);
+    _layout->setMargin(0);
     setLayout(_layout);
 
     QSizePolicy p(QSizePolicy::Preferred, QSizePolicy::Preferred);
     p.setHeightForWidth(true);
     setSizePolicy(p);
-    _layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 }
 
 bool SudokuBoardWidget::hasHeightForWidth()
@@ -55,26 +57,47 @@ void SudokuBoardWidget::onGridUpdated()
     {
         return;
     }
+
     deleteBoxes();
 
-    for (int i = 0; i < Grid::SIZE; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < Grid::SIZE; j++)
+        for (int j = 0; j < 3; j++)
         {
-            int value = _controller->getGrid()->getValue(i,j);
-            SudokuBox * box;
-            if (_controller->getGrid()->isReadOnly(i,j))
+            QFrame * f = new QFrame(this);
+            f->setFrameStyle(QFrame::Panel);
+            f->setLineWidth(2);
+            _layout->addWidget(f, i, j);
+
+            QGridLayout * littleLayout = new QGridLayout();
+            f->setLayout(littleLayout);
+            littleLayout->setSpacing(0);
+            littleLayout->setMargin(0);
+
+            for (int k = 0; k < 3; k++)
             {
-                box = new InactiveSudokuBox(i, j, value, this);
-            }
-            else
-            {
-                box = new ActiveSudokuBox(i, j, value, this);
+                for (int l = 0; l < 3; l++)
+                {
+                    int x = i * 3 + k;
+                    int y = j * 3 + l;
+
+                    int value = _controller->getGrid()->getValue(x,y);
+                    SudokuBox * box;
+                    if (_controller->getGrid()->isReadOnly(x,y))
+                    {
+                        box = new InactiveSudokuBox(x, y, value, this);
+                    }
+                    else
+                    {
+                        box = new ActiveSudokuBox(x, y, value, this);
+                    }
+
+                    _boxes[x][y] = box;
+                    littleLayout->addWidget(box, k,l);
+                    connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
+                }
             }
 
-            _boxes[i][j] = box;
-            _layout->addWidget(box, i, j, 1, 1);
-            connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
         }
     }
 
@@ -96,13 +119,17 @@ void SudokuBoardWidget::onBoxClicked(int i, int j)
 
 void SudokuBoardWidget::deleteBoxes()
 {
+    QLayoutItem *child;
+    while ((child = _layout->takeAt(0)) != 0) {
+      delete child;
+    }
+
     for (int i = 0; i < Grid::SIZE; i++)
     {
         for (int j = 0; j < Grid::SIZE; j++)
         {
             if (_boxes[i][j])
             {
-                layout()->removeWidget(_boxes[i][j]);
                 delete _boxes[i][j];
             }
         }

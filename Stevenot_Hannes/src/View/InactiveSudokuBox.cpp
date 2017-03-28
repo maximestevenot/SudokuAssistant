@@ -24,7 +24,8 @@ void InactiveSudokuBox::paintEvent(QPaintEvent * evt)
     SudokuBox::paintEvent(evt);
 
     QPainter painter(this);
-    painter.setFont(QFont("Arial", 0.3 * width(), QFont::Bold));
+    int fontSize = 0.3 * qMin(width(), height());
+    painter.setFont(QFont("Arial", fontSize, QFont::Bold));
     painter.setPen(QPen(QColor(Qt::blue)));
     painter.drawText(rect(), Qt::AlignVCenter | Qt::AlignCenter, QString::number(value()));
     painter.end();

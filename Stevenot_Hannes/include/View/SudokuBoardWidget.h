@@ -15,6 +15,7 @@
 #include <QWidget>
 #include <QPaintEvent>
 #include <QGridLayout>
+#include <QFrame>
 
 namespace SudokuAssistant {
 namespace View {
@@ -43,11 +44,11 @@ private slots:
     void onBoxClicked(int, int);
 
 private:
+
     int _boxSize;
     QGridLayout * _layout;
     Controller * _controller;
     SudokuBox * _boxes[Grid::SIZE][Grid::SIZE];
-
     void deleteBoxes();
 };
 
