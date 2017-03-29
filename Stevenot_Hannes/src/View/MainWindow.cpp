@@ -12,6 +12,7 @@
 #include "DigitEntry.h"
 #include <QString>
 #include <QPoint>
+#include <QDebug>
 
 namespace SudokuAssistant {
 namespace View {
@@ -24,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     srand(time(NULL));
 
     initComboBox();
-
     _controller = new Controller();
     _controller->setDifficulty();
 

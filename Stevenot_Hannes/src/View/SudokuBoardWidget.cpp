@@ -28,6 +28,7 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
 
     QSizePolicy p(QSizePolicy::Preferred, QSizePolicy::Preferred);
     p.setHeightForWidth(true);
+    p.setWidthForHeight(true);
     setSizePolicy(p);
 }
 
