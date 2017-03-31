@@ -47,22 +47,29 @@ void ActiveSudokuBox::mouseReleaseEvent(QMouseEvent * evt)
 
 void ActiveSudokuBox::mousePressEvent(QMouseEvent * evt)
 {
-    setBackgroundColor(Qt::white);
+    setBackgroundColor(defaultBackgroundColor());
     update();
     evt->accept();
 }
 
 void ActiveSudokuBox::enterEvent(QEvent * evt)
 {
-    setBackgroundColor(Qt::yellow);
-    update();
-    evt->accept();
+    if (backgroundColor() == defaultBackgroundColor())
+    {
+        setBackgroundColor(QColor::fromRgb(70, 130, 180));
+        update();
+        evt->accept();
+    }
 }
 
 void ActiveSudokuBox::leaveEvent(QEvent * evt)
 {
-    setBackgroundColor(Qt::white);
-    update();
+    if (backgroundColor() != tipsBackgroundColor())
+    {
+        setBackgroundColor(defaultBackgroundColor());
+        update();
+
+    }
     evt->accept();
 }
 

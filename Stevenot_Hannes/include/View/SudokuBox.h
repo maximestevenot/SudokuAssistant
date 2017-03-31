@@ -30,8 +30,12 @@ protected:
 public:
     int iIndex();
     int jIndex();
+
+    QColor defaultBackgroundColor();
+    QColor tipsBackgroundColor();
     const QColor & backgroundColor();
     void setBackgroundColor(const QColor &);
+
     int value();
     SudokuBoardWidget* parentBoard();
 

@@ -21,7 +21,7 @@ SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
     _i = i;
     _j = j;
     _value = value;
-    _backgroundColor = Qt::white;
+    _backgroundColor = defaultBackgroundColor();
     _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
@@ -46,6 +46,16 @@ int SudokuBox::iIndex()
 int SudokuBox::jIndex()
 {
     return _j;
+}
+
+QColor SudokuBox::defaultBackgroundColor()
+{
+    return Qt::white;
+}
+
+QColor SudokuBox::tipsBackgroundColor()
+{
+    return Qt::green;
 }
 
 const QColor & SudokuBox::backgroundColor()

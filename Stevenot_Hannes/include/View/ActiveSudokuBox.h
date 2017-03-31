@@ -31,6 +31,9 @@ protected:
 
 public slots:
     void updateValue(int value);
+
+private:
+    void restoreBackgroundColor();
 };
 
 }
