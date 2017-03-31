@@ -62,9 +62,9 @@ void MainWindow::onBoxUpdateRequested(int i, int j)
 {
     View::DigitEntry userInput(i, j, _controller);
     connect(&userInput, SIGNAL(boxUpdated(int,int,int)), _controller, SLOT(onGridUpdate(int,int,int)));
+
     userInput.setModal(true);
-    QPoint popupPos(QCursor::pos().x() + userInput.width() / 10, QCursor::pos().y() + userInput.height() / 10);
-    userInput.move(this->mapFromGlobal(popupPos));
+    userInput.move(QCursor::pos());
     userInput.exec();
 }
 
@@ -124,7 +124,7 @@ bool MainWindow::askSaving()
     QMessageBox msgBox(this);
     msgBox.setText(tr("The document has been modified."));
     msgBox.setInformativeText(tr("Do you want to save your changes?"));
-    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Abort | QMessageBox::Cancel);
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
 
     int choice = msgBox.exec();
