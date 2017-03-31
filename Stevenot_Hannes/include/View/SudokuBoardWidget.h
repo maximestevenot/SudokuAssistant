@@ -39,6 +39,9 @@ signals:
 public slots:
     void onGridUpdated();
     void onBoxUpdated(int i, int j, int value);
+    void highlightBox(int i, int j);
+    void restoreBoxDefaultStyle(int i, int j);
+    void markBoxAsWrong(int i, int j);
 
 private slots:
     void onBoxClicked(int, int);

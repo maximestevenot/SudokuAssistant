@@ -112,6 +112,30 @@ void SudokuBoardWidget::onBoxUpdated(int i, int j, int value)
     }
 }
 
+void SudokuBoardWidget::highlightBox(int i, int j)
+{
+    if (_boxes[i][j])
+    {
+        _boxes[i][j]->highlight();
+    }
+}
+
+void SudokuBoardWidget::restoreBoxDefaultStyle(int i, int j)
+{
+    if (_boxes[i][j])
+    {
+        _boxes[i][j]->restoreDefaultStyle();
+    }
+}
+
+void SudokuBoardWidget::markBoxAsWrong(int i, int j)
+{
+    if (_boxes[i][j])
+    {
+        _boxes[i][j]->markAsWrong();
+    }
+}
+
 void SudokuBoardWidget::onBoxClicked(int i, int j)
 {
     qDebug() << "(" << i << "," << j << ") clicked";

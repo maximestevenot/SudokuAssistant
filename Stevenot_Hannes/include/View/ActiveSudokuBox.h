@@ -11,6 +11,8 @@
 #define ACTIVESUDOKUBOX_H
 
 #include "SudokuBox.h"
+#include <QEvent>
+#include <QMouseEvent>
 
 namespace SudokuAssistant {
 namespace View {
@@ -31,6 +33,14 @@ protected:
 
 public slots:
     void updateValue(int value);
+    void highlight();
+    void markAsWrong();
+    void restoreDefaultStyle();
+
+private:
+    static const QColor DefaultFontColor;
+    static const QColor ErrorFontColor;
+    QColor _fontColor;
 };
 
 }

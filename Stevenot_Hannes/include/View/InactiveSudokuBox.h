@@ -12,10 +12,14 @@ class InactiveSudokuBox : public SudokuBox
 
 public:
     explicit InactiveSudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
+
+protected:
     void paintEvent(QPaintEvent *);
 
 public slots:
-    void updateValue(int value);
+    void highlight();
+    void markAsWrong();
+    void restoreDefaultStyle();
 
 };
 
