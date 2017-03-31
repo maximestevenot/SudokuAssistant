@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -22,7 +22,7 @@ Grid * GridLoader::getNewGrid(Controller::Difficulty difficulty)
 
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        //TODO manage error properly
+        return nullptr;
     }
 
     QTextStream in(file);
@@ -33,6 +33,28 @@ Grid * GridLoader::getNewGrid(Controller::Difficulty difficulty)
     file->close();
 
     return new Grid(line);
+}
+
+Grid * GridLoader::getNewGridFromSave(const QString & path)
+{
+    Grid * grid = new Grid();
+
+    if (path.isEmpty())
+    {
+        return nullptr;
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        return nullptr;
+    }
+
+    QDataStream in(&file);
+    in >> (*grid);
+    file.close();
+
+    return grid;
 }
 
 QFile * GridLoader::openFile(Controller::Difficulty difficulty)

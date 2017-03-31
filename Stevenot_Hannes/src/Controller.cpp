@@ -91,4 +91,33 @@ void Controller::onClearGrid()
     emit gridChanged();
 }
 
+void Controller::saveGame(const QString & path)
+{
+    if (path.isEmpty())
+    {
+        return;
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        return;
+    }
+
+    QDataStream out(&file);
+    out << (*_grid);
+    file.close();
+}
+
+void Controller::loadGame(const QString & path)
+{
+    if (_grid)
+    {
+        delete _grid;
+    }
+
+    _grid = GridLoader::getNewGridFromSave(path);
+    emit gridChanged();
+}
+
 }

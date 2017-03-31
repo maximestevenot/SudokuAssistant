@@ -22,6 +22,7 @@ class GridLoader
 {
 public:
     static Grid * getNewGrid(Controller::Difficulty difficulty = static_cast<Controller::Difficulty>(0));
+    static Grid * getNewGridFromSave(const QString & path);
 
 private:
 

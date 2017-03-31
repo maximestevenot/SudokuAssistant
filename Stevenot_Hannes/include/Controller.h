@@ -33,6 +33,9 @@ public:
     Grid * getGrid();
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
 
+    void saveGame(const QString &);
+    void loadGame(const QString &);
+
     QList<int> getPossibleValues(int l, int c);
 
 signals:
