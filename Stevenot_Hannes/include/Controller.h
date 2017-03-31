@@ -35,6 +35,7 @@ public:
 
     void saveGame(const QString &);
     void loadGame(const QString &);
+    bool userShouldSave();
 
     QList<int> getPossibleValues(int l, int c);
 
@@ -50,6 +51,7 @@ public slots:
 private:
     Grid *_grid;
     Difficulty _currentDifficulty;
+    bool _userShouldSave;
 };
 
 }

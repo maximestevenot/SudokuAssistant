@@ -81,6 +81,7 @@ void Controller::onGridUpdate(int i, int j, int value)
     if (_grid)
     {
         _grid->setValue(i, j, value);
+        _userShouldSave = true;
         emit gridUpdated(i, j, value);
     }
 }
@@ -107,6 +108,8 @@ void Controller::saveGame(const QString & path)
     QDataStream out(&file);
     out << (*_grid);
     file.close();
+
+    _userShouldSave = false;
 }
 
 void Controller::loadGame(const QString & path)
@@ -123,6 +126,11 @@ void Controller::loadGame(const QString & path)
     {
         _grid = oldGrid;
     }
+}
+
+bool Controller::userShouldSave()
+{
+    return _userShouldSave;
 }
 
 }
