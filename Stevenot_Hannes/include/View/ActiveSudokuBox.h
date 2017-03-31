@@ -11,6 +11,8 @@
 #define ACTIVESUDOKUBOX_H
 
 #include "SudokuBox.h"
+#include <QEvent>
+#include <QMouseEvent>
 
 namespace SudokuAssistant {
 namespace View {

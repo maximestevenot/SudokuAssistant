@@ -10,7 +10,6 @@
 #ifndef SUDOKUBOX_H
 #define SUDOKUBOX_H
 
-#include "SudokuBoardWidget.h"
 #include <QWidget>
 #include <QColor>
 
@@ -36,7 +35,6 @@ public:
     int iIndex() const;
     int jIndex() const;
     int value() const;
-    SudokuBoardWidget* parentBoard() const;
 
 public slots:
     virtual void updateValue(int value);
@@ -51,7 +49,6 @@ private:
     int _i;
     int _j;
     int _value;
-    SudokuBoardWidget * _boardWidget;
 
     static const QColor DefaultBackgroundColor;
     static const QColor HighlightedBackgroundColor;

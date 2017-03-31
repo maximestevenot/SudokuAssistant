@@ -25,7 +25,6 @@ SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
     _j = j;
     _value = value;
     _backgroundColor = defaultBackgroundColor();
-    _boardWidget = dynamic_cast<SudokuBoardWidget*>(parent);
 }
 
 void SudokuBox::paintEvent(QPaintEvent *)
@@ -79,11 +78,6 @@ int SudokuBox::value() const
 void SudokuBox::updateValue(int value)
 {
     _value = value;
-}
-
-SudokuBoardWidget *SudokuBox::parentBoard() const
-{
-    return _boardWidget;
 }
 
 }
