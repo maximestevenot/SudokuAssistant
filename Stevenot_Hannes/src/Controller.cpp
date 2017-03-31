@@ -81,6 +81,7 @@ void Controller::onGridUpdate(int i, int j, int value)
     if (_grid)
     {
         _grid->setValue(i, j, value);
+        _userShouldSave = true;
         emit gridUpdated(i, j, value);
     }
 }
@@ -89,6 +90,47 @@ void Controller::onClearGrid()
 {
     _grid->clear();
     emit gridChanged();
+}
+
+void Controller::saveGame(const QString & path)
+{
+    if (path.isEmpty())
+    {
+        return;
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        return;
+    }
+
+    QDataStream out(&file);
+    out << (*_grid);
+    file.close();
+
+    _userShouldSave = false;
+}
+
+void Controller::loadGame(const QString & path)
+{
+    Grid * oldGrid = _grid;
+    _grid = GridLoader::getNewGridFromSave(path);
+
+    if (_grid)
+    {
+        delete oldGrid;
+        emit gridChanged();
+    }
+    else
+    {
+        _grid = oldGrid;
+    }
+}
+
+bool Controller::userShouldSave()
+{
+    return _userShouldSave;
 }
 
 }

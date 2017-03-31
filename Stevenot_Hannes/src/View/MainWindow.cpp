@@ -13,6 +13,8 @@
 #include <QString>
 #include <QPoint>
 #include <QDebug>
+#include <QMessageBox>
+#include <QFileDialog>
 
 namespace SudokuAssistant {
 namespace View {
@@ -30,12 +32,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->_sudokuBoard->initializeWidget(_controller);
 
-    connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(exitApplication()));
+    connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(close()));
+    connect(ui->action_New, SIGNAL(triggered(bool)), this, SLOT(onNewGame()));
+    connect(ui->action_Restart, SIGNAL(triggered(bool)), _controller, SLOT(onClearGrid()));
+    connect(ui->action_Open, SIGNAL(triggered(bool)), this, SLOT(onLoadGame()));
+    connect(ui->action_Save, SIGNAL(triggered(bool)), this, SLOT(onSaveGame()));
+    connect(ui->action_Save_As, SIGNAL(triggered(bool)), this, SLOT(onSaveGameAs()));
 
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
-    connect(ui->action_New, SIGNAL(triggered(bool)), _controller, SLOT(onNewGrid()));
-    connect(ui->action_Restart, SIGNAL(triggered(bool)), _controller, SLOT(onClearGrid()));
-    connect(ui->newGameButton, SIGNAL(released()), _controller, SLOT(onNewGrid()));
+
+    connect(ui->newGameButton, SIGNAL(released()), this, SLOT(onNewGame()));
     connect(ui->difficultyComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _controller, [=](int i){ _controller->setDifficulty(static_cast<Controller::Difficulty>(i)); });
 }
 
@@ -62,9 +68,81 @@ void MainWindow::onBoxUpdateRequested(int i, int j)
     userInput.exec();
 }
 
-void MainWindow::exitApplication()
+void MainWindow::onSaveGame()
 {
-    QApplication::quit();
+    if (_savingPath.isEmpty())
+    {
+        onSaveGameAs();
+    }
+    else
+    {
+        _controller->saveGame(_savingPath);
+    }
+}
+
+void MainWindow::onSaveGameAs()
+{
+    _savingPath = QFileDialog::getSaveFileName(this, QString(), QString(),
+                                               tr("Sudoku (*.sds);;All Files(*)"));
+    _controller->saveGame(_savingPath);
+}
+
+void MainWindow::onLoadGame()
+{
+    if (_controller->userShouldSave() && !askSaving())
+    {
+        return;
+    }
+
+    QString path = QFileDialog::getOpenFileName(this, QString(), QString(),
+                                                tr("Sudoku (*.sds);;All Files(*)"));
+    _controller->loadGame(path);
+    _savingPath = path;
+}
+
+void MainWindow::onNewGame()
+{
+    if (_controller->userShouldSave() && !askSaving())
+    {
+        return;
+    }
+    _controller->onNewGrid();
+}
+
+void MainWindow::closeEvent(QCloseEvent * evt)
+{
+    if (_controller->userShouldSave() && !askSaving())
+    {
+        evt->ignore();
+        return;
+    }
+    evt->accept();
+}
+
+bool MainWindow::askSaving()
+{
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("The document has been modified."));
+    msgBox.setInformativeText(tr("Do you want to save your changes?"));
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Abort | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+
+    int choice = msgBox.exec();
+    bool ret = true;
+
+    switch (choice)
+    {
+    case QMessageBox::Save :
+        onSaveGame();
+        break;
+    case QMessageBox::Cancel :
+        ret = false;
+        break;
+    default:
+        break;
+    }
+
+    return ret;
 }
 
 }

@@ -13,12 +13,16 @@
 #include <QObject>
 #include <QList>
 #include <QStringList>
+#include <QDataStream>
 
 namespace SudokuAssistant {
 
 class Grid : QObject
 {
     Q_OBJECT
+
+    friend QDataStream & operator<<(QDataStream & out, const Grid &);
+    friend QDataStream & operator>>(QDataStream & in, Grid &);
 
 public:
     const static int SIZE = 9;
@@ -48,6 +52,9 @@ private:
     Cell _tab[SIZE][SIZE];
 
 };
+
+QDataStream & operator<<(QDataStream & out, const Grid &);
+QDataStream & operator>>(QDataStream & in, Grid &);
 
 }
 

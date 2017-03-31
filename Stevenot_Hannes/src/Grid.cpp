@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -118,6 +118,34 @@ bool Grid::isReadOnly(int i, int j)
     }
 
     return _tab[i][j].readOnly;
+}
+
+QDataStream & operator<<(QDataStream & out, const Grid & grid)
+{
+    for (int i = 0; i < Grid::SIZE; ++i)
+    {
+        for (int j = 0; j < Grid::SIZE; ++j)
+        {
+            out << grid._tab[i][j].readOnly;
+            out << grid._tab[i][j].value;
+        }
+    }
+
+    return out;
+}
+
+QDataStream & operator>>(QDataStream & in, Grid & grid)
+{
+    for (int i = 0; i < Grid::SIZE; ++i)
+    {
+        for (int j = 0; j < Grid::SIZE; ++j)
+        {
+            in >> grid._tab[i][j].readOnly;
+            in >> grid._tab[i][j].value;
+        }
+    }
+
+    return in;
 }
 
 }

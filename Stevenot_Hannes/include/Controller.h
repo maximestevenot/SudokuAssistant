@@ -33,6 +33,10 @@ public:
     Grid * getGrid();
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
 
+    void saveGame(const QString &);
+    void loadGame(const QString &);
+    bool userShouldSave();
+
     QList<int> getPossibleValues(int l, int c);
 
 signals:
@@ -47,6 +51,7 @@ public slots:
 private:
     Grid *_grid;
     Difficulty _currentDifficulty;
+    bool _userShouldSave;
 };
 
 }

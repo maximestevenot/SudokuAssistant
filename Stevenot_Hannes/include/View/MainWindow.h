@@ -28,20 +28,28 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
+    bool askSaving();
+
+protected:
+    void closeEvent(QCloseEvent *);
+
 public slots:
         void onBoxUpdateRequested(int i, int j);
+        void onSaveGame();
+        void onSaveGameAs();
+        void onLoadGame();
+        void onNewGame();
 
 private:
     Ui::MainWindow *ui;
     Controller * _controller;
+    QString _savingPath;
 
-    void initComboBox();
-
-private slots:
-    void exitApplication();
+    void initComboBox();   
 };
 
 }
 }
 
-#endif // MAINWINDOW_H
+#endif

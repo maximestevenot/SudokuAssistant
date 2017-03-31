@@ -156,6 +156,10 @@
      <string>File</string>
     </property>
     <addaction name="action_New"/>
+    <addaction name="action_Open"/>
+    <addaction name="action_Save_As"/>
+    <addaction name="action_Save"/>
+    <addaction name="separator"/>
     <addaction name="action_Restart"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
@@ -190,6 +194,36 @@
    </property>
    <property name="toolTip">
     <string>Clear the grid</string>
+   </property>
+  </action>
+  <action name="action_Open">
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Load saving</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="text">
+    <string>&amp;Save...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_Save_As">
+   <property name="text">
+    <string>Save &amp;As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as new file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>
