@@ -15,6 +15,9 @@
 namespace SudokuAssistant {
 namespace View {
 
+const QColor ActiveSudokuBox::DefaultFontColor = QColor(Qt::black);
+const QColor ActiveSudokuBox::ErrorFontColor = QColor(Qt::red);
+
 ActiveSudokuBox::ActiveSudokuBox(int i, int j, int value, QWidget *parent) : SudokuBox(i, j, value, parent)
 {
     setCursor(Qt::PointingHandCursor);
@@ -27,7 +30,7 @@ void ActiveSudokuBox::paintEvent(QPaintEvent * evt)
     QPainter painter(this);
     int fontSize = 0.3 * qMin(width(), height());
     painter.setFont(QFont("Arial", fontSize));
-    painter.setPen(QPen(QColor(Qt::black)));
+    painter.setPen(QPen(_fontColor));
 
     QString displayedContent;
     if (value())
@@ -64,7 +67,7 @@ void ActiveSudokuBox::enterEvent(QEvent * evt)
 
 void ActiveSudokuBox::leaveEvent(QEvent * evt)
 {
-    if (backgroundColor() != tipsBackgroundColor())
+    if (backgroundColor() != highlightedBackgroundColor())
     {
         setBackgroundColor(defaultBackgroundColor());
         update();
@@ -76,6 +79,25 @@ void ActiveSudokuBox::leaveEvent(QEvent * evt)
 void ActiveSudokuBox::updateValue(int value)
 {
     SudokuBox::updateValue(value);
+    update();
+}
+
+void ActiveSudokuBox::highlight()
+{
+    setBackgroundColor(highlightedBackgroundColor());
+    update();
+}
+
+void ActiveSudokuBox::markAsWrong()
+{
+    _fontColor = ErrorFontColor;
+    update();
+}
+
+void ActiveSudokuBox::restoreDefaultStyle()
+{
+    setBackgroundColor(defaultBackgroundColor());
+    _fontColor = DefaultFontColor;
     update();
 }
 

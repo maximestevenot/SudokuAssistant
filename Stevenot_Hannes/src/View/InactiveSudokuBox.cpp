@@ -31,10 +31,9 @@ void InactiveSudokuBox::paintEvent(QPaintEvent * evt)
     painter.end();
 }
 
-void InactiveSudokuBox::updateValue(int value)
-{
-    SudokuBox::updateValue(value);
-}
+void InactiveSudokuBox::highlight() {}
+void InactiveSudokuBox::markAsWrong() {}
+void InactiveSudokuBox::restoreDefaultStyle() {}
 
 }
 }

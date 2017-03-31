@@ -31,9 +31,14 @@ protected:
 
 public slots:
     void updateValue(int value);
+    void highlight();
+    void markAsWrong();
+    void restoreDefaultStyle();
 
 private:
-    void restoreBackgroundColor();
+    static const QColor DefaultFontColor;
+    static const QColor ErrorFontColor;
+    QColor _fontColor;
 };
 
 }

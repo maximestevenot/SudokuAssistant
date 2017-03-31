@@ -16,6 +16,9 @@
 namespace SudokuAssistant {
 namespace View {
 
+const QColor SudokuBox::DefaultBackgroundColor = QColor(Qt::white);
+const QColor SudokuBox::HighlightedBackgroundColor = QColor(Qt::green);
+
 SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
 {
     _i = i;
@@ -38,27 +41,27 @@ void SudokuBox::paintEvent(QPaintEvent *)
     painter.end();
 }
 
-int SudokuBox::iIndex()
+int SudokuBox::iIndex() const
 {
     return _i;
 }
 
-int SudokuBox::jIndex()
+int SudokuBox::jIndex() const
 {
     return _j;
 }
 
-QColor SudokuBox::defaultBackgroundColor()
+const QColor & SudokuBox::defaultBackgroundColor()
 {
-    return Qt::white;
+    return DefaultBackgroundColor;
 }
 
-QColor SudokuBox::tipsBackgroundColor()
+const QColor & SudokuBox::highlightedBackgroundColor()
 {
-    return Qt::green;
+    return HighlightedBackgroundColor;
 }
 
-const QColor & SudokuBox::backgroundColor()
+const QColor & SudokuBox::backgroundColor() const
 {
     return _backgroundColor;
 }
@@ -68,7 +71,7 @@ void SudokuBox::setBackgroundColor(const QColor & color)
     _backgroundColor = color;
 }
 
-int SudokuBox::value()
+int SudokuBox::value() const
 {
     return _value;
 }
@@ -78,7 +81,7 @@ void SudokuBox::updateValue(int value)
     _value = value;
 }
 
-SudokuBoardWidget *SudokuBox::parentBoard()
+SudokuBoardWidget *SudokuBox::parentBoard() const
 {
     return _boardWidget;
 }
