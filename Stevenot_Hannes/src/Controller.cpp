@@ -111,13 +111,18 @@ void Controller::saveGame(const QString & path)
 
 void Controller::loadGame(const QString & path)
 {
+    Grid * oldGrid = _grid;
+    _grid = GridLoader::getNewGridFromSave(path);
+
     if (_grid)
     {
-        delete _grid;
+        delete oldGrid;
+        emit gridChanged();
     }
-
-    _grid = GridLoader::getNewGridFromSave(path);
-    emit gridChanged();
+    else
+    {
+        _grid = oldGrid;
+    }
 }
 
 }

@@ -28,12 +28,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool askSaving();
+
 public slots:
         void onBoxUpdateRequested(int i, int j);
+
+        void saveGame();
+        void saveGameAs();
+        void loadGame();
 
 private:
     Ui::MainWindow *ui;
     Controller * _controller;
+    QString _savingPath;
 
     void initComboBox();
 
