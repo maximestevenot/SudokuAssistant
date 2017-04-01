@@ -40,6 +40,7 @@ public slots:
         void onSaveGameAs();
         void onLoadGame();
         void onNewGame();
+        void onCheckGrid();
 
 private:
     Ui::MainWindow *ui;

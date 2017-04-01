@@ -38,6 +38,7 @@ public:
     bool userShouldSave();
 
     QList<int> getPossibleValues(int l, int c);
+    bool checkGrid();
 
 signals:
     void gridChanged();

@@ -9,6 +9,7 @@
  */
 #include "Controller.h"
 #include "Gridloader.h"
+#include "Solver.h"
 #include <QtMath>
 
 namespace SudokuAssistant {
@@ -49,20 +50,27 @@ QList<int> Controller::getPossibleValues(int l, int c)
         values.removeAll(_grid->getValue(i,c));
     }
 
-    int boxSize = qSqrt(Grid::SIZE);
+    int boxSize = 3;
     for (int i = 0; i < boxSize; i++)
     {
         for (int j = 0; j < boxSize; j++)
         {
-            if (i != l % boxSize && j != c % boxSize)
+            int x = i + (l / boxSize) * boxSize;
+            int y = j + (c / boxSize) * boxSize;
+            if (x != l || y != c)
             {
-                values.removeAll(_grid->getValue(i + (int) l / boxSize, j + (int) c / boxSize));
+                values.removeAll(_grid->getValue(x, y));
             }
         }
     }
 
     values.append(0);
     return values;
+}
+
+bool Controller::checkGrid()
+{
+    return Solver::CheckGrid(_grid);
 }
 
 void Controller::onNewGrid()

@@ -22,7 +22,8 @@ SOURCES += src/main.cpp\
         src/View/SudokuBoardWidget.cpp \
         src/View/SudokuBox.cpp \
     src/View/InactiveSudokuBox.cpp \
-    src/View/DigitEntry.cpp
+    src/View/DigitEntry.cpp \
+    src/Solver.cpp
 
 HEADERS  += \
             include/Controller.h \
@@ -33,7 +34,8 @@ HEADERS  += \
             include/View/SudokuBoardWidget.h \
             include/View/SudokuBox.h \
     include/View/InactiveSudokuBox.h \
-    include/View/DigitEntry.h
+    include/View/DigitEntry.h \
+    include/Solver.h
 
 FORMS    += ui/MainWindow.ui
 

@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_Open, SIGNAL(triggered(bool)), this, SLOT(onLoadGame()));
     connect(ui->action_Save, SIGNAL(triggered(bool)), this, SLOT(onSaveGame()));
     connect(ui->action_Save_As, SIGNAL(triggered(bool)), this, SLOT(onSaveGameAs()));
+    connect(ui->action_Check_grid, SIGNAL(triggered(bool)), this, SLOT(onCheckGrid()));
 
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
 
@@ -107,6 +108,11 @@ void MainWindow::onNewGame()
         return;
     }
     _controller->onNewGrid();
+}
+
+void MainWindow::onCheckGrid()
+{
+    qDebug() << _controller->checkGrid();
 }
 
 void MainWindow::closeEvent(QCloseEvent * evt)

@@ -164,7 +164,14 @@
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menuGrid">
+    <property name="title">
+     <string>Grid</string>
+    </property>
+    <addaction name="action_Check_grid"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuGrid"/>
   </widget>
   <action name="action_New">
    <property name="text">
@@ -224,6 +231,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="action_Check_grid">
+   <property name="text">
+    <string>Check &amp;Grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Check if the values are correct</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>
