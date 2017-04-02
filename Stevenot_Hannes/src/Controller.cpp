@@ -90,7 +90,7 @@ void Controller::giveHint()
 
 bool Controller::checkGrid()
 {
-    return Solver::CheckGrid(_grid);
+    return Solver(_grid).CheckGrid();
 }
 
 void Controller::onNewGrid()

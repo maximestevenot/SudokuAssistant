@@ -12,32 +12,44 @@
 #include "QDebug"
 
 
-bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
+SudokuAssistant::Solver::Solver()
 {
-    Cell tab[SIZE][SIZE] { { Cell() } };
+    _solvedTable = new QVector<Cell>(SIZE * SIZE);
+    _numOfBacktracking = 0;
+}
 
-    //initCellTable(tab);
+SudokuAssistant::Solver::Solver(SudokuAssistant::Grid * grid) : Solver()
+{
+    _grid = grid;
+    initCellTable(_solvedTable);
+}
 
-    // TEST
-    qDebug() << "TEST INIT";
+SudokuAssistant::Solver::~Solver()
+{
+    delete _solvedTable;
+}
+
+int SudokuAssistant::Solver::index(int i, int j)
+{
+    return i * SIZE + j;
+}
+
+bool SudokuAssistant::Solver::CheckGrid()
+{
+    QVector<Cell> tab(SIZE*SIZE);
+
+    initCellTable(&tab);
+
     for (int i=0; i<SIZE; i++)
     {
         for (int j=0; j<SIZE; j++)
         {
-            qDebug() << tab[i][j].possibleValues;
-        }
-    }
-
-    for (int i=0; i<SIZE; i++)
-    {
-        for (int j=0; j<SIZE; j++)
-        {
-            int value = grid->getValue(i, j);
+            int value = _grid->getValue(i, j);
             if (value != 0)
             {
-                for (Pos * peer : tab[i][j].peers)
+                for (Pos & peer : tab[index(i,j)].peers)
                 {
-                    tab[peer->x][peer->y].possibleValues.removeAll(value);
+                    tab[index(peer.x, peer.y)].possibleValues.removeAll(value);
                 }
             }
         }
@@ -47,8 +59,7 @@ bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
     {
         for (int j=0; j<SIZE; j++)
         {
-            qDebug() << i << "," << j << " -> " << grid->getValue(i, j) << " : " << tab[i][j].possibleValues;
-            if (tab[i][j].possibleValues.isEmpty() && grid->getValue(i, j) == 0)
+            if (tab[index(i,j)].possibleValues.isEmpty() && _grid->getValue(i, j) == 0)
             {
                 return false;
             }
@@ -58,32 +69,8 @@ bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
     return true;
 }
 
-SudokuAssistant::Solver::Solver(SudokuAssistant::Grid * grid) : Solver()
+void SudokuAssistant::Solver::initCellTable(QVector<Cell> *tab)
 {
-    _grid = grid;
-    //initSolvedTable();
-}
-
-void SudokuAssistant::Solver::initSolvedTable()
-{
-    initCellTable(_solvedTable);
-}
-
-void SudokuAssistant::Solver::initCellTable(SudokuAssistant::Solver::Cell tab[9][9])
-{
-
-    for (int i=0; i<SIZE; i++)
-    {
-        for (int j=0; j<SIZE; j++)
-        {
-            for (int k=1; k<10; k++)
-            {
-                tab[i][j].possibleValues.append(k);
-                tab[i][j].assigned = false;
-            }
-        }
-    }
-
     for (int i=0; i<SIZE; i++)
     {
         for (int j=0; j<SIZE; j++)
@@ -92,17 +79,19 @@ void SudokuAssistant::Solver::initCellTable(SudokuAssistant::Solver::Cell tab[9]
             {
                 if (k != i)
                 {
-                    Pos *p = new Pos();
-                    p->x = k;
-                    p->y = j;
-                    tab[i][j].peers.append(p);
+                    Pos p;
+                    p.x = k;
+                    p.y = j;
+                    (*tab)[index(i,j)].peers.append(p);
+                    (*tab)[index(i,j)].units[1].append(p);
                 }
                 if (k != j)
                 {
-                    Pos *p = new Pos();
-                    p->x = i;
-                    p->y = i*k;
-                    tab[i][j].peers.append(p);
+                    Pos p;
+                    p.x = i;
+                    p.y = k;
+                    (*tab)[index(i,j)].peers.append(p);
+                    (*tab)[index(i,j)].units[0].append(p);
                 }
             }
 
@@ -115,10 +104,11 @@ void SudokuAssistant::Solver::initCellTable(SudokuAssistant::Solver::Cell tab[9]
                     int y = l + (j / boxSize) * boxSize;
                     if (x != i || y != j)
                     {
-                        Pos *p = new Pos();
-                        p->x = i;
-                        p->y = i*k;
-                        tab[i][j].peers.append(p);
+                        Pos p;
+                        p.x = x;
+                        p.y = y;
+                        (*tab)[index(i,j)].peers.append(p);
+                        (*tab)[index(i,j)].units[2].append(p);
                     }
                 }
             }
@@ -131,26 +121,27 @@ bool SudokuAssistant::Solver::solve()
     return false;
 }
 
-void SudokuAssistant::Solver::eliminateFC(SudokuAssistant::Solver::Cell branch[9][9], SudokuAssistant::Solver::Pos &p, int value)
+QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::eliminateFC(QVector<Cell> *branch, SudokuAssistant::Solver::Pos &p, int value)
 {
-    branch[p.x][p.y].possibleValues.removeAll(value);
+    (*branch)[index(p.x, p.y)].possibleValues.removeAll(value);
+    return branch;
 }
 
-void SudokuAssistant::Solver::assignFC(SudokuAssistant::Solver::Cell branch[9][9], SudokuAssistant::Solver::Pos &p, int value)
+QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::assignFC(QVector<Cell> *branch, SudokuAssistant::Solver::Pos &p, int value)
 {
     for (int k = 0; k<SIZE; k++)
     {
         if (k != p.x)
         {
-            branch[k][p.y].possibleValues.removeAll(value);
+            (*branch)[index(k,p.y)].possibleValues.removeAll(value);
         }
         if (k != p.y)
         {
-            branch[p.x][k].possibleValues.removeAll(value);
+            (*branch)[index(p.x,k)].possibleValues.removeAll(value);
         }
-        if (branch[k][p.y].possibleValues.length() == 0 || branch[p.x][k].possibleValues.length() == 0)
+        if ((*branch)[index(k,p.y)].possibleValues.length() == 0 || (*branch)[index(p.x,k)].possibleValues.length() == 0)
         {
-            //return nullptr;
+            return nullptr;
         }
     }
 
@@ -163,16 +154,150 @@ void SudokuAssistant::Solver::assignFC(SudokuAssistant::Solver::Cell branch[9][9
             int y = l + (p.y / boxSize) * boxSize;
             if (x != p.x || y != p.y)
             {
-                branch[x][y].possibleValues.removeAll(value);
+                (*branch)[index(x,y)].possibleValues.removeAll(value);
             }
-            if (branch[x][y].possibleValues.length() == 0)
+            if ((*branch)[index(x,y)].possibleValues.length() == 0)
             {
-                //return nullptr;
+                return nullptr;
             }
         }
     }
 
-    branch[p.x][p.y].possibleValues = QList<int>({value});
-    branch[p.x][p.y].assigned = true;
-    //return branch;
+    (*branch)[index(p.x,p.y)].possibleValues = QList<int>({value});
+    (*branch)[index(p.x,p.y)].assigned = true;
+    return branch;
+}
+
+QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::assignAC(QVector<SudokuAssistant::Solver::Cell> *cells, SudokuAssistant::Solver::Pos &assignmentPosition, int assignmentValue)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (i != assignmentValue)
+        {
+            cells = eliminateAC(cells, assignmentPosition, i);
+            if (cells == nullptr)
+            {
+                return nullptr;
+            }
+        }
+    }
+    (*cells)[index(assignmentPosition.x, assignmentPosition.y)].assigned = true;
+    return cells;
+}
+
+QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::eliminateAC(QVector<SudokuAssistant::Solver::Cell> *cells, SudokuAssistant::Solver::Pos &assignmentPosition, int assignmentValue)
+{
+    if (!(*cells)[index(assignmentPosition.x, assignmentPosition.y)].possibleValues.contains(assignmentValue))
+    {
+        return cells;
+    }
+
+    (*cells)[index(assignmentPosition.x, assignmentPosition.y)].possibleValues.removeAll(assignmentValue);
+
+    if ((*cells)[index(assignmentPosition.x, assignmentPosition.y)].possibleValues.length() == 0)
+    {
+        return nullptr;
+    }
+
+    if ((*cells)[index(assignmentPosition.x, assignmentPosition.y)].possibleValues.length() == 1)
+    {
+        (*cells)[index(assignmentPosition.x, assignmentPosition.y)].assigned = true;
+        int val2 = (*cells)[index(assignmentPosition.x, assignmentPosition.y)].possibleValues[0];
+
+        for (int i = 0; i < (*cells)[index(assignmentPosition.x, assignmentPosition.y)].peers.length(); i++)
+        {
+            cells = eliminateAC(cells, (*cells)[index(assignmentPosition.x, assignmentPosition.y)].peers[i], val2);
+            if (cells == nullptr)
+            {
+                return nullptr;
+            }
+        }
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        int n = SIZE;
+        int m = 0;
+        QList<Pos> val_place;
+
+        for (int j = 0; j < (*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i].length(); j++)
+        {
+            if ((*cells)[(*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].x,
+                    (*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].y].assigned)
+            {
+                n--;
+            }
+            else
+            {
+                m++;
+            }
+
+            if ((*cells)[(*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].x,
+                    (*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].y].possibleValues.contains(assignmentValue))
+            {
+                Pos p;
+                p.x = (*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].x;
+                p.y = (*cells)[index(assignmentPosition.x, assignmentPosition.y)].units[i][j].y;
+                val_place.append(p);
+            }
+        }
+
+        if (m > n)
+        {
+            return nullptr;
+        }
+
+        if (val_place.length() == 0)
+        {
+            return nullptr;
+        }
+
+        if (val_place.length() == 1)
+        {
+            cells = assignAC(cells, val_place[0], assignmentValue);
+
+            if (cells == nullptr)
+            {
+                return nullptr;
+            }
+        }
+    }
+    return cells;
+}
+
+QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::backtrackingSearch(QVector<SudokuAssistant::Solver::Cell> * branch)
+{
+    QVector<Cell> * ret = new QVector<Cell>(SIZE*SIZE);
+
+    if (branch == nullptr)
+    {
+        return nullptr;
+    }
+    if (isFinish(branch))
+    {
+        return branch;
+    }
+
+    Pos s = SelectUnassignedVariable(branch);
+
+    while ((*branch)[index(s.x, s.y)].possibleValues.length() > 0)
+    {
+
+        char c = SelectDomainValue(branch, s);
+
+        ret = backtrackingSearch(assignAC(Clone(branch), s, c));
+
+        if (ret != nullptr)
+        {
+            return ret;
+        }
+
+        _numOfBacktracking++;
+        branch = eliminateAC(branch, s, c);
+
+        if (branch == nullptr)
+        {
+            return nullptr;
+        }
+    }
 }

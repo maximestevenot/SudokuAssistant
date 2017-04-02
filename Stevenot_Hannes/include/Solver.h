@@ -13,6 +13,7 @@
 
 #include "Grid.h"
 #include <QList>
+#include <QVector>
 
 namespace SudokuAssistant {
 
@@ -20,8 +21,15 @@ class Solver
 {
 
 public:
+    Solver();
     Solver(Grid *);
-    static bool CheckGrid(Grid *);
+    ~Solver();
+    bool CheckGrid();
+
+private:
+    const static int SIZE = 9;
+    Grid * _grid;
+    int _numOfBacktracking;
 
     struct Pos {
         int x;
@@ -31,28 +39,30 @@ public:
     struct Cell {
         Cell()
         {
-            possibleValues = {0,1,2,3,4,5,6,7,8,9};
+            possibleValues = {1,2,3,4,5,6,7,8,9};
             assigned = false;
         }
 
         QList<int> possibleValues;
         bool assigned;
-        QList<Pos*> peers;
+        QList<Pos> peers;
+        QList<Pos> units[3];
     };
+    QVector<Cell> * _solvedTable;
+    static int index(int, int);
 
-private:
-    Solver() {}
-    const static int SIZE = 9;
-    Grid * _grid;
-    Cell _solvedTable[SIZE][SIZE] { { Cell() } };
-
-    void initSolvedTable();
-    void initCellTable(Cell tab[SIZE][SIZE]);
+    void initCellTable(QVector<Cell> *);
     bool solve();
 
     // Forward Checking
-    void eliminateFC(Cell branch[SIZE][SIZE], Pos &, int);
-    void assignFC(Cell branch[SIZE][SIZE], Pos &, int);
+    QVector<Cell> * eliminateFC(QVector<Cell> *, Pos &, int);
+    QVector<Cell> * assignFC(QVector<Cell> *, Pos &, int);
+
+    // Arc consistency
+    QVector<Cell> * assignAC(QVector<Cell> *, Pos &, int);
+    QVector<Cell> * eliminateAC(QVector<Cell> *, Pos &, int);
+
+    QVector<Cell> * backtrackingSearch(QVector<Cell> *);
 
 };
 
