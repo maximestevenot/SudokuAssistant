@@ -16,16 +16,7 @@ bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
 {
     Cell tab[SIZE][SIZE];
 
-    for (int i=0; i<SIZE; i++)
-    {
-        for (int j=0; j<SIZE; j++)
-        {
-            for (int k=1; k<10; k++)
-            {
-                tab[i][j].possibleValues.append(k);
-            }
-        }
-    }
+    initCellTable(tab);
 
     for (int i=0; i<SIZE; i++)
     {
@@ -34,24 +25,9 @@ bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
             int value = grid->getValue(i, j);
             if (value != 0)
             {
-                for (int k = 0; k<SIZE; k++)
+                for (Pos * peer : tab[i][j].peers)
                 {
-                    tab[k][j].possibleValues.removeAll(value);
-                    tab[i][k].possibleValues.removeAll(value);
-                }
-
-                int boxSize = 3;
-                for (int k = 0; k < boxSize; k++)
-                {
-                    for (int l = 0; l < boxSize; l++)
-                    {
-                        int x = k + (i / boxSize) * boxSize;
-                        int y = l + (j / boxSize) * boxSize;
-                        if (x != i || y != j)
-                        {
-                            tab[x][y].possibleValues.removeAll(value);
-                        }
-                    }
+                    tab[peer->x][peer->y].possibleValues.removeAll(value);
                 }
             }
         }
@@ -80,13 +56,20 @@ SudokuAssistant::Solver::Solver(SudokuAssistant::Grid * grid) : Solver()
 
 void SudokuAssistant::Solver::initSolvedTable()
 {
+    initCellTable(_solvedTable);
+}
+
+void SudokuAssistant::Solver::initCellTable(SudokuAssistant::Solver::Cell tab[9][9])
+{
+
     for (int i=0; i<SIZE; i++)
     {
         for (int j=0; j<SIZE; j++)
         {
             for (int k=1; k<10; k++)
             {
-                _solvedTable[i][j].possibleValues.append(k);
+                tab[i][j].possibleValues.append(k);
+                tab[i][j].assigned = false;
             }
         }
     }
@@ -95,26 +78,37 @@ void SudokuAssistant::Solver::initSolvedTable()
     {
         for (int j=0; j<SIZE; j++)
         {
-            int value = _grid->getValue(i, j);
-            if (value != 0)
+            for (int k = 0; k<SIZE; k++)
             {
-                for (int k = 0; k<SIZE; k++)
+                if (k != i)
                 {
-                    _solvedTable[k][j].possibleValues.removeAll(value);
-                    _solvedTable[i][k].possibleValues.removeAll(value);
+                    Pos *p = new Pos();
+                    p->x = k;
+                    p->y = j;
+                    tab[i][j].peers.append(p);
                 }
-
-                int boxSize = 3;
-                for (int k = 0; k < boxSize; k++)
+                if (k != j)
                 {
-                    for (int l = 0; l < boxSize; l++)
+                    Pos *p = new Pos();
+                    p->x = i;
+                    p->y = i*k;
+                    tab[i][j].peers.append(p);
+                }
+            }
+
+            int boxSize = 3;
+            for (int k = 0; k < boxSize; k++)
+            {
+                for (int l = 0; l < boxSize; l++)
+                {
+                    int x = k + (i / boxSize) * boxSize;
+                    int y = l + (j / boxSize) * boxSize;
+                    if (x != i || y != j)
                     {
-                        int x = k + (i / boxSize) * boxSize;
-                        int y = l + (j / boxSize) * boxSize;
-                        if (x != i || y != j)
-                        {
-                            _solvedTable[x][y].possibleValues.removeAll(value);
-                        }
+                        Pos *p = new Pos();
+                        p->x = i;
+                        p->y = i*k;
+                        tab[i][j].peers.append(p);
                     }
                 }
             }
@@ -127,6 +121,48 @@ bool SudokuAssistant::Solver::solve()
     return false;
 }
 
-void SudokuAssistant::Solver::GetHint()
+void SudokuAssistant::Solver::eliminateFC(SudokuAssistant::Solver::Cell branch[9][9], SudokuAssistant::Solver::Pos &p, int value)
 {
+    branch[p.x][p.y].possibleValues.removeAll(value);
+}
+
+void SudokuAssistant::Solver::assignFC(SudokuAssistant::Solver::Cell branch[9][9], SudokuAssistant::Solver::Pos &p, int value)
+{
+    for (int k = 0; k<SIZE; k++)
+    {
+        if (k != p.x)
+        {
+            branch[k][p.y].possibleValues.removeAll(value);
+        }
+        if (k != p.y)
+        {
+            branch[p.x][k].possibleValues.removeAll(value);
+        }
+        if (branch[k][p.y].possibleValues.length() == 0 || branch[p.x][k].possibleValues.length() == 0)
+        {
+            //return nullptr;
+        }
+    }
+
+    int boxSize = 3;
+    for (int k = 0; k < boxSize; k++)
+    {
+        for (int l = 0; l < boxSize; l++)
+        {
+            int x = k + (p.x / boxSize) * boxSize;
+            int y = l + (p.y / boxSize) * boxSize;
+            if (x != p.x || y != p.y)
+            {
+                branch[x][y].possibleValues.removeAll(value);
+            }
+            if (branch[x][y].possibleValues.length() == 0)
+            {
+                //return nullptr;
+            }
+        }
+    }
+
+    branch[p.x][p.y].possibleValues = QList<int>({value});
+    branch[p.x][p.y].assigned = true;
+    //return branch;
 }

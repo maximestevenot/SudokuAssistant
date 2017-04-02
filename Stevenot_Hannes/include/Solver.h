@@ -22,22 +22,31 @@ class Solver
 public:
     Solver(Grid *);
     static bool CheckGrid(Grid *);
-    void GetHint();
+
+    struct Pos {
+        int x;
+        int y;
+    };
+
+    struct Cell {
+        QList<int> possibleValues;
+        bool assigned;
+        QList<Pos*> peers;
+    };
 
 private:
     Solver() {}
     const static int SIZE = 9;
     Grid * _grid;
-
-    struct Cell {
-        QList<int> possibleValues;
-        bool solved;
-        int answer;
-    };
     Cell _solvedTable[SIZE][SIZE];
 
     void initSolvedTable();
+    void initCellTable(Cell tab[SIZE][SIZE]);
     bool solve();
+
+    // Forward Checking
+    void eliminateFC(Cell branch[SIZE][SIZE], Pos &, int);
+    void assignFC(Cell branch[SIZE][SIZE], Pos &, int);
 
 };
 
