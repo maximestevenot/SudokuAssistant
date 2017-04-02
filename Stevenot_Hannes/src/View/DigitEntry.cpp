@@ -50,10 +50,19 @@ void DigitEntry::initButtons()
         {
             QPushButton* tempButton = new QPushButton(QString::number(buttonId));
             tempButton->setShortcut(tr(shortcuts[buttonId - 1]));
+            QFont font = tempButton->font();
+            font.setPointSize(12);
+
             if (!possibleValues.contains(buttonId))
             {
                 tempButton->setEnabled(false);
             }
+            else
+            {
+                font.setBold(true);
+            }
+
+            tempButton->setFont(font);
             grid->addWidget(tempButton, i, j);
             group->addButton(tempButton, buttonId);
             buttonId++;
