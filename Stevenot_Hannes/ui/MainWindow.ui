@@ -102,6 +102,44 @@
        </widget>
       </item>
       <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="_hintButton">
+        <property name="text">
+         <string>Hint</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/resources.qrc">
+          <normaloff>:/images/images/hint-icon.png</normaloff>:/images/images/hint-icon.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string/>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="_validateButton">
+        <property name="text">
+         <string>Validate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -166,9 +204,10 @@
    </widget>
    <widget class="QMenu" name="menuGrid">
     <property name="title">
-     <string>Grid</string>
+     <string>Game</string>
     </property>
     <addaction name="action_Check_grid"/>
+    <addaction name="actionShow_Hint"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGrid"/>
@@ -244,6 +283,21 @@
     <string>Ctrl+G</string>
    </property>
   </action>
+  <action name="actionShow_Hint">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/images/hint-icon.png</normaloff>:/images/images/hint-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show Hint</string>
+   </property>
+   <property name="toolTip">
+    <string>Highlight a box with only 1 choice</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -254,6 +308,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
