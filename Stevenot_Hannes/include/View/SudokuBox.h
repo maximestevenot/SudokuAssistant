@@ -24,7 +24,7 @@ class SudokuBox : public QWidget
 
 protected:
     explicit SudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
-    virtual void paintEvent(QPaintEvent *);
+    virtual void paintEvent(QPaintEvent *) override;
 
     static const QColor & defaultBackgroundColor();
     static const QColor & highlightedBackgroundColor();

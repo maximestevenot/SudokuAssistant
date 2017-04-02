@@ -25,17 +25,17 @@ public:
     explicit ActiveSudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
 
 protected:
-    void paintEvent(QPaintEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void mousePressEvent(QMouseEvent *);
-    void enterEvent(QEvent *);
-    void leaveEvent(QEvent *);
+    void paintEvent(QPaintEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *) override;
+    void mousePressEvent(QMouseEvent *) override;
+    void enterEvent(QEvent *) override;
+    void leaveEvent(QEvent *) override;
 
 public slots:
-    void updateValue(int value);
-    void highlight();
-    void markAsWrong();
-    void restoreDefaultStyle();
+    void updateValue(int value) override;
+    void highlight() override;
+    void markAsWrong() override;
+    void restoreDefaultStyle() override;
 
 private:
     static const QColor DefaultFontColor;

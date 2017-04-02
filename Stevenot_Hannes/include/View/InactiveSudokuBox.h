@@ -14,12 +14,12 @@ public:
     explicit InactiveSudokuBox(int i, int j, int value = 0, QWidget * parent = 0);
 
 protected:
-    void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *) override;
 
 public slots:
-    void highlight();
-    void markAsWrong();
-    void restoreDefaultStyle();
+    void highlight() override;
+    void markAsWrong() override;
+    void restoreDefaultStyle() override;
 
 };
 
