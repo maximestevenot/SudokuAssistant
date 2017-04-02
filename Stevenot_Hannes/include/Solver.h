@@ -29,6 +29,12 @@ public:
     };
 
     struct Cell {
+        Cell()
+        {
+            possibleValues = {0,1,2,3,4,5,6,7,8,9};
+            assigned = false;
+        }
+
         QList<int> possibleValues;
         bool assigned;
         QList<Pos*> peers;
@@ -38,7 +44,7 @@ private:
     Solver() {}
     const static int SIZE = 9;
     Grid * _grid;
-    Cell _solvedTable[SIZE][SIZE];
+    Cell _solvedTable[SIZE][SIZE] { { Cell() } };
 
     void initSolvedTable();
     void initCellTable(Cell tab[SIZE][SIZE]);

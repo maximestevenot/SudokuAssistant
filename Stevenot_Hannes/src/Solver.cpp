@@ -14,9 +14,19 @@
 
 bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
 {
-    Cell tab[SIZE][SIZE];
+    Cell tab[SIZE][SIZE] { { Cell() } };
 
-    initCellTable(tab);
+    //initCellTable(tab);
+
+    // TEST
+    qDebug() << "TEST INIT";
+    for (int i=0; i<SIZE; i++)
+    {
+        for (int j=0; j<SIZE; j++)
+        {
+            qDebug() << tab[i][j].possibleValues;
+        }
+    }
 
     for (int i=0; i<SIZE; i++)
     {
@@ -51,7 +61,7 @@ bool SudokuAssistant::Solver::CheckGrid(SudokuAssistant::Grid * grid)
 SudokuAssistant::Solver::Solver(SudokuAssistant::Grid * grid) : Solver()
 {
     _grid = grid;
-    initSolvedTable();
+    //initSolvedTable();
 }
 
 void SudokuAssistant::Solver::initSolvedTable()
