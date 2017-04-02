@@ -25,24 +25,6 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
     _layout->setSpacing(0);
     _layout->setMargin(0);
     setLayout(_layout);
-
-    QSizePolicy p(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    p.setHeightForWidth(true);
-    p.setWidthForHeight(true);
-
-    setSizePolicy(p);
-}
-
-bool SudokuBoardWidget::hasHeightForWidth()
-{
-    qDebug() << "call hasHeightForWidth()";
-    return true;
-}
-
-int SudokuBoardWidget::heightForWidth(int w)
-{
-    qDebug() << "call heightForWidth(int)";
-    return w;
 }
 
 void SudokuBoardWidget::initializeWidget(Controller * controller)

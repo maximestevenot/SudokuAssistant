@@ -29,8 +29,6 @@ class SudokuBoardWidget : public QWidget
 public:
     explicit SudokuBoardWidget(QWidget *parent = 0);
     void initializeWidget(Controller * controller);
-    bool hasHeightForWidth();
-    int heightForWidth(int w);
 
 signals:
     void boxClicked(int, int);
