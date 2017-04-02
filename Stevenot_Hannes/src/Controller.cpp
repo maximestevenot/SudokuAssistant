@@ -11,6 +11,7 @@
 #include "Gridloader.h"
 #include "Solver.h"
 #include <QtMath>
+#include <QDebug>
 
 namespace SudokuAssistant {
 
@@ -64,8 +65,27 @@ QList<int> Controller::getPossibleValues(int l, int c)
         }
     }
 
-    values.append(0);
     return values;
+}
+
+void Controller::giveHint()
+{
+    if (!_grid)
+    {
+        return;
+    }
+
+    for (int i = 0; i < Grid::SIZE; ++i)
+    {
+        for (int j = 0; j < Grid::SIZE; ++j)
+        {
+            if (!_grid->isReadOnly(i,j) && getPossibleValues(i,j).size() == 1)
+            {
+                emit hint(i,j);
+                return;
+            }
+        }
+    }
 }
 
 bool Controller::checkGrid()

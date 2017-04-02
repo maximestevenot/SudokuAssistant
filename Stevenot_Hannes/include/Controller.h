@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -43,11 +43,13 @@ public:
 signals:
     void gridChanged();
     void gridUpdated(int i, int j, int value);
+    void hint(int i, int j);
 
 public slots:
     void onNewGrid();
     void onGridUpdate(int i, int j, int value);
     void onClearGrid();
+    void giveHint();
 
 private:
     Grid *_grid;

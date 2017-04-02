@@ -124,6 +124,7 @@ void SudokuAssistant::Solver::initSolvedTable()
 
 bool SudokuAssistant::Solver::solve()
 {
+    return false;
 }
 
 void SudokuAssistant::Solver::GetHint()
