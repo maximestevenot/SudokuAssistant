@@ -72,6 +72,8 @@ void SudokuBoardWidget::onGridUpdated()
         delete child;
     }
 
+    Grid * newGrid = _controller->getGrid();
+
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -93,9 +95,9 @@ void SudokuBoardWidget::onGridUpdated()
                     int x = i * 3 + k;
                     int y = j * 3 + l;
 
-                    int value = _controller->getGrid()->getValue(x,y);
+                    int value = newGrid->getValue(x,y);
                     SudokuBox * box;
-                    if (_controller->getGrid()->isReadOnly(x,y))
+                    if (newGrid->isReadOnly(x,y))
                     {
                         box = new InactiveSudokuBox(x, y, value, this);
                     }

@@ -56,7 +56,7 @@ void Grid::clear()
         {
             if (! _tab[i][j].readOnly)
             {
-                setValue(i, j, 0);
+                _tab[i][j].value = 0;
             }
         }
     }

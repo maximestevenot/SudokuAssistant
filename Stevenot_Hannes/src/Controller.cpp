@@ -101,6 +101,7 @@ void Controller::onNewGrid()
     }
 
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+    _userShouldSave = false;
     emit gridChanged();
 }
 
@@ -117,6 +118,7 @@ void Controller::onGridUpdate(int i, int j, int value)
 void Controller::onClearGrid()
 {
     _grid->clear();
+    _userShouldSave = false;
     emit gridChanged();
 }
 
@@ -148,6 +150,7 @@ void Controller::loadGame(const QString & path)
     if (_grid)
     {
         delete oldGrid;
+        _userShouldSave = false;
         emit gridChanged();
     }
     else
