@@ -37,7 +37,7 @@ public:
     void loadGame(const QString &);
     bool userShouldSave();
 
-    QList<int> getPossibleValues(int l, int c);
+    QList<int> getPossibleValues(int l, int c); //TODO move into Solver
     bool checkGrid();
 
 signals:

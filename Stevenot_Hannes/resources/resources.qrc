@@ -5,4 +5,7 @@
         <file alias="Insane">grids/Insane.txt</file>
         <file alias="Medium">grids/Medium.txt</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>images/hint-icon.png</file>
+    </qresource>
 </RCC>

@@ -29,6 +29,7 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
     QSizePolicy p(QSizePolicy::Preferred, QSizePolicy::Preferred);
     p.setHeightForWidth(true);
     p.setWidthForHeight(true);
+
     setSizePolicy(p);
 }
 
@@ -46,6 +47,11 @@ int SudokuBoardWidget::heightForWidth(int w)
 
 void SudokuBoardWidget::initializeWidget(Controller * controller)
 {
+    if (!controller)
+    {
+        return;
+    }
+
     _controller = controller;
     connect(_controller, SIGNAL(gridChanged()), this, SLOT(onGridUpdated()));
     connect(_controller, SIGNAL(gridUpdated(int,int,int)), this, SLOT(onBoxUpdated(int,int,int)));
@@ -60,7 +66,11 @@ void SudokuBoardWidget::onGridUpdated()
         return;
     }
 
-    deleteBoxes();
+    QLayoutItem *child;
+    while ((child = _layout->takeAt(0)) != 0)
+    {
+        delete child;
+    }
 
     for (int i = 0; i < 3; i++)
     {
@@ -94,7 +104,12 @@ void SudokuBoardWidget::onGridUpdated()
                         box = new ActiveSudokuBox(x, y, value, this);
                     }
 
+                    if (_boxes[x][y])
+                    {
+                        delete _boxes[x][y];
+                    }
                     _boxes[x][y] = box;
+
                     littleLayout->addWidget(box, k,l);
                     connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
                 }
@@ -141,25 +156,6 @@ void SudokuBoardWidget::onBoxClicked(int i, int j)
 {
     //qDebug() << "(" << i << "," << j << ") clicked"; //TODO REMOVE
     emit boxClicked(i,j);
-}
-
-void SudokuBoardWidget::deleteBoxes()
-{
-    QLayoutItem *child;
-    while ((child = _layout->takeAt(0)) != 0) {
-      delete child;
-    }
-
-    for (int i = 0; i < Grid::SIZE; i++)
-    {
-        for (int j = 0; j < Grid::SIZE; j++)
-        {
-            if (_boxes[i][j])
-            {
-                delete _boxes[i][j];
-            }
-        }
-    }
 }
 
 }

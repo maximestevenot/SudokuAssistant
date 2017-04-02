@@ -27,7 +27,6 @@ class SudokuBoardWidget : public QWidget
     Q_OBJECT
 
 public:
-
     explicit SudokuBoardWidget(QWidget *parent = 0);
     void initializeWidget(Controller * controller);
     bool hasHeightForWidth();
@@ -47,12 +46,9 @@ private slots:
     void onBoxClicked(int, int);
 
 private:
-
-    int _boxSize;
-    QGridLayout * _layout;
-    Controller * _controller;
-    SudokuBox * _boxes[Grid::SIZE][Grid::SIZE];
-    void deleteBoxes();
+    QGridLayout * _layout = 0;
+    Controller * _controller = 0;
+    SudokuBox * _boxes[Grid::SIZE][Grid::SIZE] { {0} };
 };
 
 }
