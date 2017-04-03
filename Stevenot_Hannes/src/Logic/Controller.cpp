@@ -17,7 +17,7 @@ namespace Logic {
 
 using namespace Model;
 
-const QStringList Controller::Difficulty_Level =  { tr("Easy"), tr("Medium"), tr("Hard"), tr("Insane") };
+const QString Controller::Difficulty_Level[] = { tr("Easy"), tr("Medium"), tr("Hard"), tr("Insane") };
 
 Controller::Controller() : QObject()
 {

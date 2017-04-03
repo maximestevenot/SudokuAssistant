@@ -27,8 +27,7 @@ class Controller : public QObject
 public:
     enum Difficulty { Difficulty_Easy = 0, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
 
-    static const QStringList Difficulty_Level;
-
+    static const QString Difficulty_Level[];
     Controller();
     ~Controller();
 

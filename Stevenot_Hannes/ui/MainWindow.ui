@@ -203,7 +203,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="action_New"/>
     <addaction name="action_Open"/>
@@ -216,14 +216,14 @@
    </widget>
    <widget class="QMenu" name="menuGrid">
     <property name="title">
-     <string>Game</string>
+     <string>&amp;Game</string>
     </property>
     <addaction name="action_Check_grid"/>
     <addaction name="actionShow_Hint"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
@@ -293,7 +293,7 @@
   </action>
   <action name="action_Check_grid">
    <property name="text">
-    <string>Check &amp;Grid</string>
+    <string>&amp;Validate</string>
    </property>
    <property name="toolTip">
     <string>Check if the values are correct</string>
@@ -308,7 +308,7 @@
      <normaloff>:/images/images/hint-icon.png</normaloff>:/images/images/hint-icon.png</iconset>
    </property>
    <property name="text">
-    <string>Show Hint</string>
+    <string>&amp;Hint</string>
    </property>
    <property name="toolTip">
     <string>Highlight a box with only 1 choice</string>
