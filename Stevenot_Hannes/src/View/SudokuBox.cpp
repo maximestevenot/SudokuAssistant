@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -36,7 +36,7 @@ void SudokuBox::paintEvent(QPaintEvent *)
     painter.setPen(pen);
 
     painter.fillRect(rect(), _backgroundColor);
-    painter.drawRect(0,0, width() - 1, height() - 1);
+    painter.drawRect(0, 0, width() - 1, height() - 1);
 
     painter.end();
 }

@@ -7,7 +7,7 @@
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
-#include "Gridloader.h"
+#include "GridLoader.h"
 #include <random>
 #include <chrono>
 #include <QFile>
@@ -15,6 +15,9 @@
 #include <QString>
 
 namespace SudokuAssistant {
+namespace Logic {
+
+using namespace Model;
 
 Grid * GridLoader::getNewGrid(Controller::Difficulty difficulty)
 {
@@ -76,7 +79,6 @@ QFile * GridLoader::openFile(Controller::Difficulty difficulty)
         fileName = ":/grids/Insane";
         break;
     default:
-        // TODO make random grid
         fileName = ":/grids/Medium";
         break;
     }
@@ -87,11 +89,9 @@ QFile * GridLoader::openFile(Controller::Difficulty difficulty)
 int GridLoader::getRandomLineIndex(int lineCount)
 {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-
     std::default_random_engine generator(seed);
     std::uniform_int_distribution<int> distribution(1, lineCount);
-    int i = distribution(generator);
-    return i;
+    return distribution(generator);
 }
 
 QStringList GridLoader::getLine(QTextStream & in, int index)
@@ -108,4 +108,5 @@ QStringList GridLoader::getLine(QTextStream & in, int index)
     return line.split(" ");
 }
 
+}
 }

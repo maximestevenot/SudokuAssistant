@@ -17,6 +17,7 @@
 #include "Solver.h"
 
 namespace SudokuAssistant {
+namespace Logic {
 
 class Controller : public QObject
 {
@@ -24,27 +25,27 @@ class Controller : public QObject
     Q_ENUMS(Difficulty)
 
 public:
-    enum Difficulty { Difficulty_Easy, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
+    enum Difficulty { Difficulty_Easy = 0, Difficulty_Medium, Difficulty_Hard, Difficulty_Insane, Difficulty_Count };
 
     static const QStringList Difficulty_Level;
 
     Controller();
     ~Controller();
 
-    Grid * getGrid();
+    Model::Grid * getGrid() const;
     void setDifficulty(Difficulty diff = static_cast<Controller::Difficulty>(0));
 
     void saveGame(const QString &);
     void loadGame(const QString &);
-    bool userShouldSave();
-
-    QList<int> getPossibleValues(int l, int c); //TODO move into Solver
+    bool userShouldSave() const;
     bool checkGrid();
+
+    QList<int> getCurrentlyAvailableValues(int, int);
 
 signals:
     void gridChanged();
     void gridUpdated(int i, int j, int value);
-    void hint(int i, int j, int value);
+    void hint(int i, int j);
     void incorrectValue(int, int);
 
 public slots:
@@ -55,12 +56,12 @@ public slots:
     void onIncorrectValue(int, int);
 
 private:
-    Grid *_grid;
+    Model::Grid * _grid = nullptr;
     Solver * _solver = nullptr;
     Difficulty _currentDifficulty;
-    bool _userShouldSave;
+    bool _userShouldSave = false;
 };
 
 }
-
+}
 #endif

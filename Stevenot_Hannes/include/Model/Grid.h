@@ -16,6 +16,7 @@
 #include <QDataStream>
 
 namespace SudokuAssistant {
+namespace Model {
 
 class Grid : QObject
 {
@@ -30,10 +31,8 @@ public:
     Grid();
     Grid(QStringList);
 
-    int getValue(int i, int j);
-    QList<int> getLine(int i);
-    QList<int> getColumn(int j);
-    bool isReadOnly(int i, int j);
+    int getValue(int i, int j) const;
+    bool isReadOnly(int i, int j) const;
 
 signals:
     void onValueChanged(int i, int j, int value);
@@ -56,6 +55,7 @@ private:
 QDataStream & operator<<(QDataStream & out, const Grid &);
 QDataStream & operator>>(QDataStream & in, Grid &);
 
+}
 }
 
 #endif

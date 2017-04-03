@@ -17,12 +17,13 @@
 #include <QTextStream>
 
 namespace SudokuAssistant {
+namespace Logic {
 
 class GridLoader
 {
 public:
-    static Grid * getNewGrid(Controller::Difficulty difficulty = static_cast<Controller::Difficulty>(0));
-    static Grid * getNewGridFromSave(const QString & path);
+    static Model::Grid * getNewGrid(Controller::Difficulty difficulty = static_cast<Controller::Difficulty>(0));
+    static Model::Grid * getNewGridFromSave(const QString & path);
 
 private:
 
@@ -32,5 +33,5 @@ private:
 };
 
 }
-
+}
 #endif

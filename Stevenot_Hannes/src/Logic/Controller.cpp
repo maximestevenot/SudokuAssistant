@@ -8,13 +8,16 @@
  * or revised without written permission of the authors.
  */
 #include "Controller.h"
-#include "Gridloader.h"
+#include "GridLoader.h"
 #include <QtMath>
 #include <QDebug>
 
 namespace SudokuAssistant {
+namespace Logic {
 
-const QStringList Controller::Difficulty_Level =  { "Easy", "Medium", "Hard", "Insane" };
+using namespace Model;
+
+const QStringList Controller::Difficulty_Level =  { tr("Easy"), tr("Medium"), tr("Hard"), tr("Insane") };
 
 Controller::Controller() : QObject()
 {
@@ -28,45 +31,14 @@ Controller::~Controller()
     delete _grid;
 }
 
-Grid *Controller::getGrid()
+Grid * Controller::getGrid() const
 {
     return _grid;
 }
 
-void Controller::setDifficulty(Controller::Difficulty diff)
+void Controller::setDifficulty(Controller::Difficulty difficulty)
 {
-    _currentDifficulty = diff;
-}
-
-QList<int> Controller::getPossibleValues(int l, int c)
-{
-    QList<int> values;
-    for (int i = 1; i < 10; i++)
-    {
-        values.append(i);
-    }
-
-    for (int i = 0; i < Grid::SIZE; i++)
-    {
-        values.removeAll(_grid->getValue(l,i));
-        values.removeAll(_grid->getValue(i,c));
-    }
-
-    int boxSize = 3;
-    for (int i = 0; i < boxSize; i++)
-    {
-        for (int j = 0; j < boxSize; j++)
-        {
-            int x = i + (l / boxSize) * boxSize;
-            int y = j + (c / boxSize) * boxSize;
-            if (x != l || y != c)
-            {
-                values.removeAll(_grid->getValue(x, y));
-            }
-        }
-    }
-
-    return values;
+    _currentDifficulty = difficulty;
 }
 
 void Controller::giveHint()
@@ -76,27 +48,26 @@ void Controller::giveHint()
         return;
     }
 
-    int min = 10;
-    int iMin, jMin;
+    int min = 10, iMin, jMin;
 
     for (int i = 0; i < Grid::SIZE; ++i)
     {
         for (int j = 0; j < Grid::SIZE; ++j)
         {
-            if (!_grid->isReadOnly(i,j) && _grid->getValue(i, j) == 0 && getPossibleValues(i,j).size() < min)
+            if (!_grid->isReadOnly(i,j) && _grid->getValue(i, j) == 0 && _solver->getCurrentlyAvailableValues(i,j).size() < min)
             {
                 iMin = i;
                 jMin = j;
-                min = getPossibleValues(i,j).size();
+                min = _solver->getCurrentlyAvailableValues(i,j).size();
             }
         }
     }
 
-    if (min != 10)
+    if (min < 10)
     {
         int correctValue = _solver->getCorrectValue(iMin,jMin);
         onGridUpdate(iMin, jMin, correctValue);
-        emit hint(iMin, jMin, correctValue);
+        emit hint(iMin, jMin);
     }
 }
 
@@ -107,7 +78,12 @@ void Controller::onIncorrectValue(int i, int j)
 
 bool Controller::checkGrid()
 {
-    return _solver->CheckGrid();
+    return _solver->checkGrid();
+}
+
+QList<int> Controller::getCurrentlyAvailableValues(int i, int j)
+{
+    return  _solver->getCurrentlyAvailableValues(i,j);
 }
 
 void Controller::onNewGrid()
@@ -177,9 +153,10 @@ void Controller::loadGame(const QString & path)
     }
 }
 
-bool Controller::userShouldSave()
+bool Controller::userShouldSave() const
 {
     return _userShouldSave;
 }
 
+}
 }

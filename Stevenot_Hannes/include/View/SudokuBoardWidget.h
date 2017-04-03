@@ -28,7 +28,7 @@ class SudokuBoardWidget : public QWidget
 
 public:
     explicit SudokuBoardWidget(QWidget *parent = 0);
-    void initializeWidget(Controller * controller);
+    void initializeWidget(Logic::Controller * controller);
 
 signals:
     void boxClicked(int, int);
@@ -36,7 +36,7 @@ signals:
 public slots:
     void onGridUpdated();
     void onBoxUpdated(int i, int j, int value);
-    void giveHint(int i, int j, int value);
+    void giveHint(int i, int j);
     void restoreBoxDefaultStyle(int i, int j);
     void markBoxAsWrong(int i, int j);
 
@@ -45,8 +45,8 @@ private slots:
 
 private:
     QGridLayout * _layout = 0;
-    Controller * _controller = 0;
-    SudokuBox * _boxes[Grid::SIZE][Grid::SIZE] { {0} };
+    Logic::Controller * _controller = 0;
+    SudokuBox * _boxes[Model::Grid::SIZE][Model::Grid::SIZE] { {0} };
 };
 
 }

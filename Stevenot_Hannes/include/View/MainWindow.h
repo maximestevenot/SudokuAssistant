@@ -3,7 +3,7 @@
  * Authors : Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
- * 
+ *
  * No portion of this document may be reproduced, copied
  * or revised without written permission of the authors.
  */
@@ -30,22 +30,23 @@ public:
     bool askSaving();
 
 protected:
-    void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent *) override;
 
 public slots:
-        void onBoxUpdateRequested(int i, int j);
-        void onSaveGame();
-        void onSaveGameAs();
-        void onLoadGame();
-        void onNewGame();
-        void onCheckGrid();
-        void onShowAboutDialog();
+    void onBoxUpdateRequested(int i, int j);
+    void onSaveGame();
+    void onSaveGameAs();
+    void onLoadGame();
+    void onNewGame();
+    void onCheckGrid();
+    void onShowAboutDialog();
 
 private:
     Ui::MainWindow *ui;
-    Controller * _controller;
+    Logic::Controller * _controller;
     QString _savingPath;
-    void initComboBox();   
+
+    void initComboBox();
 };
 
 }

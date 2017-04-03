@@ -14,36 +14,41 @@ TEMPLATE = app
 CONFIG  += c++11
 
 SOURCES += src/main.cpp\
-        src/Grid.cpp \
-        src/Controller.cpp \
-        src/Gridloader.cpp \
         src/View/ActiveSudokuBox.cpp \
         src/View/MainWindow.cpp \
         src/View/SudokuBoardWidget.cpp \
         src/View/SudokuBox.cpp \
     src/View/InactiveSudokuBox.cpp \
     src/View/DigitEntry.cpp \
-    src/Solver.cpp
+    src/View/VictoryWindow.cpp \
+    src/Model/Grid.cpp \
+    src/Logic/Controller.cpp \
+    src/Logic/Solver.cpp \
+    src/Logic/GridLoader.cpp
 
 HEADERS  += \
-            include/Controller.h \
-            include/Grid.h \
-            include/Gridloader.h \
             include/View/ActiveSudokuBox.h \
             include/View/MainWindow.h \
             include/View/SudokuBoardWidget.h \
             include/View/SudokuBox.h \
     include/View/InactiveSudokuBox.h \
     include/View/DigitEntry.h \
-    include/Solver.h
+    include/View/VictoryWindow.h \
+    include/Model/Grid.h \
+    include/Logic/Controller.h \
+    include/Logic/GridLoader.h \
+    include/Logic/Solver.h
 
-FORMS    += ui/MainWindow.ui
+FORMS    += ui/MainWindow.ui \
+    ui/VictoryWindow.ui
 
 MOC_DIR  = moc
 OBJECTS_DIR  = obj
 
 INCLUDEPATH +=  include \
-                include/View/
+                include/View/ \
+                include/Model/ \
+                include/Logic
 
 RESOURCES += \
     resources/resources.qrc

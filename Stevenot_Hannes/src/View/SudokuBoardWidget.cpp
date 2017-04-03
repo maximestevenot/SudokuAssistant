@@ -19,6 +19,9 @@
 namespace SudokuAssistant {
 namespace View {
 
+using namespace Model;
+using namespace Logic;
+
 SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
 {
     _layout = new QGridLayout();
@@ -37,7 +40,7 @@ void SudokuBoardWidget::initializeWidget(Controller * controller)
     _controller = controller;
     connect(_controller, SIGNAL(gridChanged()), this, SLOT(onGridUpdated()));
     connect(_controller, SIGNAL(gridUpdated(int,int,int)), this, SLOT(onBoxUpdated(int,int,int)));
-    connect(_controller, SIGNAL(hint(int,int,int)), this, SLOT(giveHint(int,int,int)));
+    connect(_controller, SIGNAL(hint(int,int)), this, SLOT(giveHint(int,int)));
     connect(_controller, SIGNAL(incorrectValue(int,int)), this, SLOT(markBoxAsWrong(int,int)));
     onGridUpdated();
 }
@@ -113,11 +116,10 @@ void SudokuBoardWidget::onBoxUpdated(int i, int j, int value)
     }
 }
 
-void SudokuBoardWidget::giveHint(int i, int j, int value)
+void SudokuBoardWidget::giveHint(int i, int j)
 {
     if (_boxes[i][j])
     {
-        _boxes[i][j]->updateValue(value);
         _boxes[i][j]->highlight();
     }
 }

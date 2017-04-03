@@ -10,6 +10,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "DigitEntry.h"
+#include "VictoryWindow.h"
 #include <QString>
 #include <QPoint>
 #include <QDebug>
@@ -19,12 +20,13 @@
 namespace SudokuAssistant {
 namespace View {
 
+using namespace Logic;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    srand(time(NULL));
 
     initComboBox();
     _controller = new Controller();
@@ -41,9 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_Check_grid, SIGNAL(triggered(bool)), this, SLOT(onCheckGrid()));
     connect(ui->_validateButton, SIGNAL(clicked(bool)), this, SLOT(onCheckGrid()));
     connect(ui->actionShow_Hint, SIGNAL(triggered(bool)), _controller, SLOT(giveHint()));
-
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
-
     connect(ui->_hintButton, SIGNAL(clicked(bool)), _controller, SLOT(giveHint()));
     connect(ui->newGameButton, SIGNAL(clicked(bool)), this, SLOT(onNewGame()));
     connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(onShowAboutDialog()));
@@ -53,14 +53,16 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _controller;
 }
 
 void MainWindow::initComboBox()
 {
-    for (int diff = 0; diff < Controller::Difficulty_Count; diff++)
+    for (int i = 0; i < Controller::Difficulty_Count; i++)
     {
-        ui->difficultyComboBox->addItem(Controller::Difficulty_Level[diff], static_cast<Controller::Difficulty>(diff));
+        ui->difficultyComboBox->addItem(Controller::Difficulty_Level[i], static_cast<Controller::Difficulty>(i));
     }
+    ui->difficultyComboBox->setCurrentIndex(Controller::Difficulty_Medium);
 }
 
 void MainWindow::onBoxUpdateRequested(int i, int j)
@@ -68,7 +70,6 @@ void MainWindow::onBoxUpdateRequested(int i, int j)
     View::DigitEntry userInput(i, j, _controller);
     connect(&userInput, SIGNAL(boxUpdated(int,int,int)), _controller, SLOT(onGridUpdate(int,int,int)));
 
-    userInput.setModal(true);
     userInput.move(QCursor::pos());
     userInput.exec();
 }
@@ -116,7 +117,10 @@ void MainWindow::onNewGame()
 
 void MainWindow::onCheckGrid()
 {
-    _controller->checkGrid();
+    if (_controller->checkGrid())
+    {
+        VictoryWindow(this).exec();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent * evt)
@@ -133,13 +137,13 @@ void MainWindow::onShowAboutDialog()
 {
     QMessageBox::about(this,
                        tr("About"),
-                       tr("Sudoku Assistant\n(C) ENSICAEN 2016-2017\nGuillaume Hannes, Maxime Stevenot"));
+                       tr("Sudoku Assistant\nCopyright (C) ENSICAEN 2016-2017\nGuillaume Hannes, Maxime Stevenot"));
 }
 
 bool MainWindow::askSaving()
 {
     QMessageBox msgBox(this);
-    msgBox.setText(tr("The document has been modified."));
+    msgBox.setText(tr("The board has been modified."));
     msgBox.setInformativeText(tr("Do you want to save your changes?"));
     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);

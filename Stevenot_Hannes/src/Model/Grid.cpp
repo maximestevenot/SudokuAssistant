@@ -11,6 +11,7 @@
 #include <stdexcept>
 
 namespace SudokuAssistant {
+namespace Model {
 
 Grid::Grid()
 {
@@ -76,7 +77,7 @@ void Grid::setValue(int i, int j, int value)
     }
 }
 
-int Grid::getValue(int i, int j)
+int Grid::getValue(int i, int j) const
 {
     if (i < 0 || j < 0 || i >= SIZE || j > SIZE)
     {
@@ -86,31 +87,7 @@ int Grid::getValue(int i, int j)
     return _tab[i][j].value;
 }
 
-QList<int> Grid::getLine(int index)
-{
-    QList<int> list;
-
-    for (int i = 0; i < SIZE; ++i)
-    {
-        list.append(getValue(index, i));
-    }
-
-    return list;
-}
-
-QList<int> Grid::getColumn(int index)
-{
-    QList<int> list;
-
-    for (int i = 0; i < SIZE; ++i)
-    {
-        list.append(getValue(i, index));
-    }
-
-    return list;
-}
-
-bool Grid::isReadOnly(int i, int j)
+bool Grid::isReadOnly(int i, int j) const
 {
     if (i < 0 || j < 0 || i >= SIZE || j > SIZE)
     {
@@ -148,4 +125,5 @@ QDataStream & operator>>(QDataStream & in, Grid & grid)
     return in;
 }
 
+}
 }

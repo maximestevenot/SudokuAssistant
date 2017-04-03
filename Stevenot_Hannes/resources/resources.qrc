@@ -7,6 +7,7 @@
     </qresource>
     <qresource prefix="/images">
         <file>images/hint-icon.png</file>
+        <file>images/victory.jpg</file>
     </qresource>
     <qresource prefix="/translations">
         <file>translations/SudokuAssistant_frFR.qm</file>

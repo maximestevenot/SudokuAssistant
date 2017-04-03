@@ -15,6 +15,8 @@
 namespace SudokuAssistant {
 namespace View {
 
+using namespace Logic;
+
 DigitEntry::DigitEntry(int iBox, int jBox, Controller * controller, QWidget *parent) : QDialog(parent, Qt::Popup)
 {
     setModal(true);
@@ -43,7 +45,7 @@ void DigitEntry::initButtons()
     const char * shortcuts[] = {"1","2","3","4","5","6","7","8","9"};
 
     int buttonId = 1;
-    QList<int> possibleValues = _controller->getPossibleValues(_i, _j);
+    QList<int> possibleValues = _controller->getCurrentlyAvailableValues(_i, _j);
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
