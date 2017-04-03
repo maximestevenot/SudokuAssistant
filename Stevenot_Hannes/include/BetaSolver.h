@@ -18,13 +18,13 @@
 
 namespace SudokuAssistant {
 
-class Solver : public QObject
+class [[deprecated]] BetaSolver : public QObject
 {
     Q_OBJECT
 public:
-    Solver();
-    Solver(Grid *);
-    ~Solver();
+    BetaSolver();
+    BetaSolver(Grid *);
+    ~BetaSolver();
     void changeGrid(Grid *);
 
     bool CheckGrid();
@@ -37,6 +37,7 @@ signals:
 private:
     const static int SIZE = 9;
     Grid * _grid;
+    int _numOfBacktracking;
 
     struct Pos {
         int x;
@@ -44,13 +45,19 @@ private:
     };
 
     struct Cell {
-        QList<int> possibleValues = {1,2,3,4,5,6,7,8,9};
-        bool assigned = false;
+        Cell()
+        {
+            possibleValues = {1,2,3,4,5,6,7,8,9};
+            assigned = false;
+        }
+
+        QList<int> possibleValues;
+        bool assigned;
         QList<Pos> peers;
         QList<Pos> units[3];
     };
     QVector<Cell> * _solvedTable;
-    int index(int, int);
+    static int index(int, int);
 
     void initSolvedTable();
 
@@ -60,7 +67,12 @@ private:
 
     QVector<Cell> * backtrackingSearch(QVector<Cell> *);
 
+    // Arc consistency
+    QVector<Cell> * assignAC(QVector<Cell> *, Pos &, int);
+    QVector<Cell> * eliminateAC(QVector<Cell> *, Pos &, int);
+
     // Minimum Remaining Value + Max Degree
+    [[deprecated("unstable, use another heuristic instead")]]
     Pos heuristic(QVector<Cell> *);
     QList<Pos> minimumRemainingValuesList(QVector<Cell> *);
     Pos maxDegree(QVector<Cell> *, QList<Pos>);

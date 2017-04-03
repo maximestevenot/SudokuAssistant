@@ -44,13 +44,15 @@ public:
 signals:
     void gridChanged();
     void gridUpdated(int i, int j, int value);
-    void hint(int i, int j);
+    void hint(int i, int j, int value);
+    void incorrectValue(int, int);
 
 public slots:
     void onNewGrid();
     void onGridUpdate(int i, int j, int value);
     void onClearGrid();
     void giveHint();
+    void onIncorrectValue(int, int);
 
 private:
     Grid *_grid;

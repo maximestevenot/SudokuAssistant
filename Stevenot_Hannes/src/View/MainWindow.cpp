@@ -114,7 +114,7 @@ void MainWindow::onNewGame()
 
 void MainWindow::onCheckGrid()
 {
-    qDebug() << _controller->checkGrid();
+    _controller->checkGrid();
 }
 
 void MainWindow::closeEvent(QCloseEvent * evt)

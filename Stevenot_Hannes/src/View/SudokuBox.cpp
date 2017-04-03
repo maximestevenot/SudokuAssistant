@@ -18,6 +18,7 @@ namespace View {
 
 const QColor SudokuBox::DefaultBackgroundColor = QColor(Qt::white);
 const QColor SudokuBox::HighlightedBackgroundColor = QColor(Qt::green);
+const QColor SudokuBox::WrongBackgroundColor = QColor(Qt::red);
 
 SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
 {
@@ -58,6 +59,11 @@ const QColor & SudokuBox::defaultBackgroundColor()
 const QColor & SudokuBox::highlightedBackgroundColor()
 {
     return HighlightedBackgroundColor;
+}
+
+const QColor &SudokuBox::wrongBackgroundColor()
+{
+    return WrongBackgroundColor;
 }
 
 const QColor & SudokuBox::backgroundColor() const

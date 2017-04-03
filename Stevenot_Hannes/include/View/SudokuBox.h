@@ -28,6 +28,7 @@ protected:
 
     static const QColor & defaultBackgroundColor();
     static const QColor & highlightedBackgroundColor();
+    static const QColor & wrongBackgroundColor();
     const QColor & backgroundColor() const;
     void setBackgroundColor(const QColor &);
 
@@ -52,6 +53,7 @@ private:
 
     static const QColor DefaultBackgroundColor;
     static const QColor HighlightedBackgroundColor;
+    static const QColor WrongBackgroundColor;
     QColor _backgroundColor;
 };
 

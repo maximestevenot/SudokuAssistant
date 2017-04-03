@@ -16,7 +16,7 @@ namespace SudokuAssistant {
 namespace View {
 
 const QColor ActiveSudokuBox::DefaultFontColor = QColor(Qt::black);
-const QColor ActiveSudokuBox::ErrorFontColor = QColor(Qt::red);
+const QColor ActiveSudokuBox::HintFontColor = QColor(Qt::darkGreen);
 
 ActiveSudokuBox::ActiveSudokuBox(int i, int j, int value, QWidget *parent) : SudokuBox(i, j, value, parent)
 {
@@ -50,8 +50,7 @@ void ActiveSudokuBox::mouseReleaseEvent(QMouseEvent * evt)
 
 void ActiveSudokuBox::mousePressEvent(QMouseEvent * evt)
 {
-    setBackgroundColor(defaultBackgroundColor());
-    update();
+    restoreDefaultStyle();
     evt->accept();
 }
 
@@ -84,20 +83,19 @@ void ActiveSudokuBox::updateValue(int value)
 
 void ActiveSudokuBox::highlight()
 {
-    setBackgroundColor(highlightedBackgroundColor());
+    _fontColor = HintFontColor;
     update();
 }
 
 void ActiveSudokuBox::markAsWrong()
 {
-    _fontColor = ErrorFontColor;
+    setBackgroundColor(wrongBackgroundColor());
     update();
 }
 
 void ActiveSudokuBox::restoreDefaultStyle()
 {
     setBackgroundColor(defaultBackgroundColor());
-    _fontColor = DefaultFontColor;
     update();
 }
 

@@ -37,7 +37,8 @@ void SudokuBoardWidget::initializeWidget(Controller * controller)
     _controller = controller;
     connect(_controller, SIGNAL(gridChanged()), this, SLOT(onGridUpdated()));
     connect(_controller, SIGNAL(gridUpdated(int,int,int)), this, SLOT(onBoxUpdated(int,int,int)));
-    connect(_controller, SIGNAL(hint(int,int)), this, SLOT(highlightBox(int,int)));
+    connect(_controller, SIGNAL(hint(int,int,int)), this, SLOT(giveHint(int,int,int)));
+    connect(_controller, SIGNAL(incorrectValue(int,int)), this, SLOT(markBoxAsWrong(int,int)));
     onGridUpdated();
 }
 
@@ -112,10 +113,11 @@ void SudokuBoardWidget::onBoxUpdated(int i, int j, int value)
     }
 }
 
-void SudokuBoardWidget::highlightBox(int i, int j)
+void SudokuBoardWidget::giveHint(int i, int j, int value)
 {
     if (_boxes[i][j])
     {
+        _boxes[i][j]->updateValue(value);
         _boxes[i][j]->highlight();
     }
 }
@@ -138,7 +140,6 @@ void SudokuBoardWidget::markBoxAsWrong(int i, int j)
 
 void SudokuBoardWidget::onBoxClicked(int i, int j)
 {
-    //qDebug() << "(" << i << "," << j << ") clicked"; //TODO REMOVE
     emit boxClicked(i,j);
 }
 

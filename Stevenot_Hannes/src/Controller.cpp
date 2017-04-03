@@ -19,11 +19,8 @@ const QStringList Controller::Difficulty_Level =  { "Easy", "Medium", "Hard", "I
 Controller::Controller() : QObject()
 {
     _grid = GridLoader::getNewGrid(_currentDifficulty);
-    if (_solver != nullptr)
-    {
-        delete _solver;
-    }
     _solver = new Solver(_grid);
+    connect(_solver, SIGNAL(incorrectValue(int,int)), this, SLOT(onIncorrectValue(int,int)));
 }
 
 Controller::~Controller()
@@ -79,22 +76,37 @@ void Controller::giveHint()
         return;
     }
 
+    int min = 10;
+    int iMin, jMin;
+
     for (int i = 0; i < Grid::SIZE; ++i)
     {
         for (int j = 0; j < Grid::SIZE; ++j)
         {
-            if (!_grid->isReadOnly(i,j) && getPossibleValues(i,j).size() == 1)
+            if (!_grid->isReadOnly(i,j) && _grid->getValue(i, j) == 0 && getPossibleValues(i,j).size() < min)
             {
-                emit hint(i,j);
-                return;
+                iMin = i;
+                jMin = j;
+                min = getPossibleValues(i,j).size();
             }
         }
     }
+
+    if (min != 10)
+    {
+        int correctValue = _solver->getCorrectValue(iMin,jMin);
+        onGridUpdate(iMin, jMin, correctValue);
+        emit hint(iMin, jMin, correctValue);
+    }
+}
+
+void Controller::onIncorrectValue(int i, int j)
+{
+    emit incorrectValue(i, j);
 }
 
 bool Controller::checkGrid()
 {
-    _solver->solve();
     return _solver->CheckGrid();
 }
 
@@ -106,6 +118,7 @@ void Controller::onNewGrid()
     }
 
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+    _solver->changeGrid(_grid);
     _userShouldSave = false;
     emit gridChanged();
 }

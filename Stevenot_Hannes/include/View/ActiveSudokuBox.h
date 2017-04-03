@@ -39,7 +39,7 @@ public slots:
 
 private:
     static const QColor DefaultFontColor;
-    static const QColor ErrorFontColor;
+    static const QColor HintFontColor;
     QColor _fontColor;
 };
 
