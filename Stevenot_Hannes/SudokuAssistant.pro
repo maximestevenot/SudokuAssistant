@@ -47,3 +47,5 @@ INCLUDEPATH +=  include \
 
 RESOURCES += \
     resources/resources.qrc
+
+TRANSLATIONS = SudokuAssistant_frFR.ts
