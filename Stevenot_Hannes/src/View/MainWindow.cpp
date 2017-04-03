@@ -44,7 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
 
     connect(ui->_hintButton, SIGNAL(clicked(bool)), _controller, SLOT(giveHint()));
-    connect(ui->newGameButton, SIGNAL(released()), this, SLOT(onNewGame()));
+    connect(ui->newGameButton, SIGNAL(clicked(bool)), this, SLOT(onNewGame()));
+    connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(onShowAboutDialog()));
     connect(ui->difficultyComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _controller, [=](int i){ _controller->setDifficulty(static_cast<Controller::Difficulty>(i)); });
 }
 
@@ -125,6 +126,13 @@ void MainWindow::closeEvent(QCloseEvent * evt)
         return;
     }
     evt->accept();
+}
+
+void MainWindow::onShowAboutDialog()
+{
+    QMessageBox::about(this,
+                       tr("About"),
+                       tr("Sudoku Assistant\n(C) ENSICAEN 2016-2017\nGuillaume Hannes, Maxime Stevenot"));
 }
 
 bool MainWindow::askSaving()
