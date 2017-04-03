@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_Save, SIGNAL(triggered(bool)), this, SLOT(onSaveGame()));
     connect(ui->action_Save_As, SIGNAL(triggered(bool)), this, SLOT(onSaveGameAs()));
     connect(ui->action_Check_grid, SIGNAL(triggered(bool)), this, SLOT(onCheckGrid()));
+    connect(ui->_validateButton, SIGNAL(clicked(bool)), this, SLOT(onCheckGrid()));
     connect(ui->actionShow_Hint, SIGNAL(triggered(bool)), _controller, SLOT(giveHint()));
 
     connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));

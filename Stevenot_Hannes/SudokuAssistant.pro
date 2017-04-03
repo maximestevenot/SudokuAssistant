@@ -48,4 +48,4 @@ INCLUDEPATH +=  include \
 RESOURCES += \
     resources/resources.qrc
 
-TRANSLATIONS = SudokuAssistant_frFR.ts
+TRANSLATIONS = resources/translations/SudokuAssistant_frFR.ts

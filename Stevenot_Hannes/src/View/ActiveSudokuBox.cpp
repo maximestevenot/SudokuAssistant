@@ -66,7 +66,7 @@ void ActiveSudokuBox::enterEvent(QEvent * evt)
 
 void ActiveSudokuBox::leaveEvent(QEvent * evt)
 {
-    if (backgroundColor() != highlightedBackgroundColor())
+    if (backgroundColor() != wrongBackgroundColor())
     {
         setBackgroundColor(defaultBackgroundColor());
         update();

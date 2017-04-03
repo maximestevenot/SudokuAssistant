@@ -8,4 +8,7 @@
     <qresource prefix="/images">
         <file>images/hint-icon.png</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file>translations/SudokuAssistant_frFR.ts</file>
+    </qresource>
 </RCC>
