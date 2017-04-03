@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         a.installTranslator(qtTranslator);
 
         QTranslator * appTranslator = new QTranslator();
-        appTranslator->load("SudokuAssistant_frFR.ts", ":/translations/translations/");
+        appTranslator->load("translations/SudokuAssistant_frFR.qm", ":/translations");
         a.installTranslator(appTranslator);
     }
 
