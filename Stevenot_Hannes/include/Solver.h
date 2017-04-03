@@ -25,6 +25,7 @@ public:
     Solver(Grid *);
     ~Solver();
     bool CheckGrid();
+    bool solve();
 
 private:
     const static int SIZE = 9;
@@ -52,7 +53,6 @@ private:
     static int index(int, int);
 
     void initCellTable(QVector<Cell> *);
-    bool solve();
 
     // Forward Checking
     QVector<Cell> * eliminateFC(QVector<Cell> *, Pos &, int);
@@ -63,6 +63,17 @@ private:
     QVector<Cell> * eliminateAC(QVector<Cell> *, Pos &, int);
 
     QVector<Cell> * backtrackingSearch(QVector<Cell> *);
+
+    // Minimum Remaining Value + Max Degree
+    Pos heuristic(QVector<Cell> *);
+    QList<Pos> minimumRemainingValuesList(QVector<Cell> *);
+    Pos maxDegree(QVector<Cell> *, QList<Pos>);
+
+    int leastConstraintValue(QVector<Cell> *, Pos);
+
+    bool isFinish(QVector<Cell> *);
+    QVector<Cell> * clone(QVector<Cell> * source);
+    int getMinIndex(QVector<int> indexesArray);
 
 };
 

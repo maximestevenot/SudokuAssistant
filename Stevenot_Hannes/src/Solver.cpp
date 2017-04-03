@@ -118,6 +118,16 @@ void SudokuAssistant::Solver::initCellTable(QVector<Cell> *tab)
 
 bool SudokuAssistant::Solver::solve()
 {
+    _solvedTable = backtrackingSearch(_solvedTable);
+
+    for (int i=0; i<SIZE; i++)
+    {
+        QString str = "";
+        for (int j=0; j<SIZE; j++)
+        {
+            qDebug() << (*_solvedTable)[index(i,j)].possibleValues;
+        }
+    }
     return false;
 }
 
@@ -278,14 +288,14 @@ QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::backtrackingSea
         return branch;
     }
 
-    Pos s = SelectUnassignedVariable(branch);
+    Pos s = heuristic(branch);
 
     while ((*branch)[index(s.x, s.y)].possibleValues.length() > 0)
     {
 
-        char c = SelectDomainValue(branch, s);
+        int c = leastConstraintValue(branch, s);
 
-        ret = backtrackingSearch(assignAC(Clone(branch), s, c));
+        ret = backtrackingSearch(assignAC(clone(branch), s, c));
 
         if (ret != nullptr)
         {
@@ -300,4 +310,141 @@ QVector<SudokuAssistant::Solver::Cell> *SudokuAssistant::Solver::backtrackingSea
             return nullptr;
         }
     }
+    return nullptr;
+}
+
+SudokuAssistant::Solver::Pos SudokuAssistant::Solver::heuristic(QVector<SudokuAssistant::Solver::Cell> * branch)
+{
+    return maxDegree(branch, minimumRemainingValuesList(branch));
+}
+
+QList<SudokuAssistant::Solver::Pos> SudokuAssistant::Solver::minimumRemainingValuesList(QVector<SudokuAssistant::Solver::Cell> *branch)
+{
+    int min = SIZE + 1;
+    QList<Pos> list;
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if ((!((*branch)[index(i, j)].assigned)) && ((*branch)[index(i, j)].possibleValues.length() == min))
+            {
+                Pos p;
+                p.x = i;
+                p.y = j;
+                list.append(p);
+                continue;
+            }
+            if ((!((*branch)[index(i, j)].assigned)) && ((*branch)[index(i, j)].possibleValues.length() < min))
+            {
+                Pos p;
+                p.x = i;
+                p.y = j;
+                list.clear();
+                min = (*branch)[index(i, j)].possibleValues.length();
+                list.append(p);
+            }
+
+        }
+    }
+    return list;
+}
+
+SudokuAssistant::Solver::Pos SudokuAssistant::Solver::maxDegree(QVector<SudokuAssistant::Solver::Cell> * branch, QList<SudokuAssistant::Solver::Pos> mrvs)
+{
+    int deg = -1;
+    Pos p;
+    for (int i = 0; i < mrvs.length(); i++)
+    {
+        int count = 0;
+        for (int k = 0; k < (*branch)[index(mrvs[i].x, mrvs[i].y)].peers.length(); k++)
+        {
+            if (!(*branch)[index((*branch)[index(mrvs[i].x, mrvs[i].y)].peers[k].y, (*branch)[index(mrvs[i].x, mrvs[i].y)].peers[k].x)].assigned)
+            {
+                count++;
+            }
+        }
+        if (count > deg)
+        {
+            deg = count;
+            p = mrvs[i];
+        }
+    }
+    return p;
+}
+
+int SudokuAssistant::Solver::leastConstraintValue(QVector<SudokuAssistant::Solver::Cell> * branch, SudokuAssistant::Solver::Pos variablePosition)
+{
+    int len = (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues.length();
+    QVector<int> arr(len);
+
+    for (int i = 0; i < len; i++)
+    {
+        arr[i] = 0;
+    }
+
+    for (int i = 0; i < len; i++)
+    {
+        for (int j = 0; j < (*branch)[index(variablePosition.x, variablePosition.y)].peers.length(); j++)
+        {
+            if ((*branch)[index((*branch)[index(variablePosition.x, variablePosition.y)].peers[j].x,
+                                (*branch)[index(variablePosition.x, variablePosition.y)].peers[j].y)].possibleValues.contains(
+                        (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues[i]))
+            {
+                arr[i]++;
+            }
+        }
+    }
+    return (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues[getMinIndex(arr)];
+}
+
+bool SudokuAssistant::Solver::isFinish(QVector<SudokuAssistant::Solver::Cell> * branch)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (!(*branch)[index(i, j)].assigned)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+QVector<SudokuAssistant::Solver::Cell> * SudokuAssistant::Solver::clone(QVector<SudokuAssistant::Solver::Cell> * source)
+{
+    QVector<Cell> * ret = new QVector<Cell>(SIZE * SIZE);
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            Cell c;
+            c.assigned = (*source)[index(i, j)].assigned;
+            c.possibleValues = QList<int>((*source)[index(i, j)].possibleValues);
+            c.peers = QList<Pos>((*source)[index(i, j)].peers);
+            for (int k=0; k<3; k++)
+            {
+                c.units[k] = QList<Pos>((*source)[index(i, j)].units[k]);
+            }
+
+            (*ret)[index(i, j)] = c;
+        }
+    }
+    return ret;
+}
+
+int SudokuAssistant::Solver::getMinIndex(QVector<int> indexesArray)
+{
+    int min = indexesArray[0];
+    int index = 0;
+    for (int i = 1; i < indexesArray.length(); i++)
+    {
+        if (indexesArray[i] < min)
+        {
+            min = indexesArray[i];
+            index = i;
+        }
+    }
+    return index;
 }

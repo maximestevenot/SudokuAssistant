@@ -14,6 +14,7 @@
 #include <QStringList>
 #include <QList>
 #include "Grid.h"
+#include "Solver.h"
 
 namespace SudokuAssistant {
 
@@ -53,6 +54,7 @@ public slots:
 
 private:
     Grid *_grid;
+    Solver * _solver = nullptr;
     Difficulty _currentDifficulty;
     bool _userShouldSave;
 };

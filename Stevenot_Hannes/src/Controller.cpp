@@ -9,7 +9,6 @@
  */
 #include "Controller.h"
 #include "Gridloader.h"
-#include "Solver.h"
 #include <QtMath>
 #include <QDebug>
 
@@ -20,6 +19,11 @@ const QStringList Controller::Difficulty_Level =  { "Easy", "Medium", "Hard", "I
 Controller::Controller() : QObject()
 {
     _grid = GridLoader::getNewGrid(_currentDifficulty);
+    if (_solver != nullptr)
+    {
+        delete _solver;
+    }
+    _solver = new Solver(_grid);
 }
 
 Controller::~Controller()
@@ -90,7 +94,8 @@ void Controller::giveHint()
 
 bool Controller::checkGrid()
 {
-    return Solver(_grid).CheckGrid();
+    _solver->solve();
+    return _solver->CheckGrid();
 }
 
 void Controller::onNewGrid()
