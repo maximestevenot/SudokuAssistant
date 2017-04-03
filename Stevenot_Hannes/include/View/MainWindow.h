@@ -27,8 +27,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-
     bool askSaving();
 
 protected:
@@ -41,12 +39,12 @@ public slots:
         void onLoadGame();
         void onNewGame();
         void onCheckGrid();
+        void onShowAboutDialog();
 
 private:
     Ui::MainWindow *ui;
     Controller * _controller;
     QString _savingPath;
-
     void initComboBox();   
 };
 
