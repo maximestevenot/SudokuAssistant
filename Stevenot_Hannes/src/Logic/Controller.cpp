@@ -49,7 +49,7 @@ void Controller::giveHint()
         return;
     }
 
-    int min = 10, iMin, jMin;
+    int min = 10, iMin = 0, jMin = 0;
 
     for (int i = 0; i < Grid::SIZE; ++i)
     {
