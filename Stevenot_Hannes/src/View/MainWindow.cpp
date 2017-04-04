@@ -58,9 +58,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::initComboBox()
 {
+    const QString Difficulty_Level[] = { tr("Easy"), tr("Medium"), tr("Hard"), tr("Insane") };
+
     for (int i = 0; i < Controller::Difficulty_Count; i++)
     {
-        ui->difficultyComboBox->addItem(Controller::Difficulty_Level[i], static_cast<Controller::Difficulty>(i));
+        ui->difficultyComboBox->addItem(Difficulty_Level[i], static_cast<Controller::Difficulty>(i));
     }
     ui->difficultyComboBox->setCurrentIndex(Controller::Difficulty_Medium);
 }
