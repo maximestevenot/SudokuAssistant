@@ -55,29 +55,30 @@ private:
 
     const static int SIZE = 9;
     Model::Grid * _grid = nullptr;
-    QVector<Cell> * _solvedTable = nullptr;
+    QVector<Cell> _solvedTable;
 
     // Forward Checking functions section
 
-    QVector<Cell> * eliminateFC(QVector<Cell> *, Pos &, int);
-    QVector<Cell> * assignFC(QVector<Cell> *, Pos &, int);
-    QVector<Cell> * backtrackingSearch(QVector<Cell> *);
+    QVector<Cell> eliminateFC(QVector<Cell>, Pos &, int);
+    QVector<Cell> assignFC(QVector<Cell>, Pos &, int);
+
+    QVector<Cell> backtrackingSearch(QVector<Cell>);
 
     ///
     /// \brief Heuristic used in Forward Checking algorithm
     /// \return Minimum Remaining Value + Max Degree
     ///
-    Pos heuristic(const QVector<Cell> *) const;
-    QList<Pos> minimumRemainingValuesList(const QVector<Cell> *) const;
-    Pos maxDegree(const QVector<Cell> *, QList<Pos>) const;
-    int leastConstraintValue(const QVector<Cell> *, Pos) const;
+    Pos heuristic(const QVector<Cell>) const;
+    QList<Pos> minimumRemainingValuesList(const QVector<Cell>) const;
+    Pos maxDegree(const QVector<Cell>, QList<Pos>) const;
+    int leastConstraintValue(const QVector<Cell>, Pos) const;
 
     // Utility functions section
 
     void initSolvedTable();
     int index(int, int) const;
-    bool isFinish(const QVector<Cell> *) const;
-    QVector<Cell> * clone(const QVector<Cell> * source) const;
+    bool isFinish(const QVector<Cell>) const;
+    QVector<Cell> clone(const QVector<Cell> source) const;
     int getMinIndex(QVector<int> indexesArray) const;
 
 };

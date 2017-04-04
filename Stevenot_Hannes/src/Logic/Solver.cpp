@@ -17,7 +17,7 @@ using namespace Model;
 
 Solver::Solver()
 {
-    _solvedTable = new QVector<Cell>(SIZE * SIZE);
+    _solvedTable = QVector<Cell>(SIZE * SIZE);
 }
 
 Solver::Solver(Grid * grid) : Solver()
@@ -27,7 +27,6 @@ Solver::Solver(Grid * grid) : Solver()
 
 Solver::~Solver()
 {
-    delete _solvedTable;
 }
 
 void Solver::changeGrid(Grid * grid)
@@ -53,7 +52,7 @@ bool Solver::checkGrid()
     {
         for (int j = 0; j < SIZE; j++)
         {
-            if ((*_solvedTable)[index(i,j)].possibleValues[0] != _grid->getValue(i, j))
+            if (_solvedTable[index(i,j)].possibleValues[0] != _grid->getValue(i, j))
             {
                 isCorrect = false;
                 if (_grid->getValue(i, j) != 0)
@@ -68,11 +67,8 @@ bool Solver::checkGrid()
 
 void Solver::initSolvedTable()
 {
-    if (_solvedTable)
-    {
-        delete _solvedTable;
-    }
-    _solvedTable = new QVector<Cell>(SIZE * SIZE);
+    _solvedTable.clear();
+    _solvedTable = QVector<Cell>(SIZE * SIZE);
 
     for (int i=0; i<SIZE; i++)
     {
@@ -85,16 +81,16 @@ void Solver::initSolvedTable()
                     Pos p;
                     p.x = k;
                     p.y = j;
-                    (*_solvedTable)[index(i,j)].peers.append(p);
-                    (*_solvedTable)[index(i,j)].units[1].append(p);
+                    _solvedTable[index(i,j)].peers.append(p);
+                    _solvedTable[index(i,j)].units[1].append(p);
                 }
                 if (k != j)
                 {
                     Pos p;
                     p.x = i;
                     p.y = k;
-                    (*_solvedTable)[index(i,j)].peers.append(p);
-                    (*_solvedTable)[index(i,j)].units[0].append(p);
+                    _solvedTable[index(i,j)].peers.append(p);
+                    _solvedTable[index(i,j)].units[0].append(p);
                 }
             }
 
@@ -110,8 +106,8 @@ void Solver::initSolvedTable()
                         Pos p;
                         p.x = x;
                         p.y = y;
-                        (*_solvedTable)[index(i,j)].peers.append(p);
-                        (*_solvedTable)[index(i,j)].units[2].append(p);
+                        _solvedTable[index(i,j)].peers.append(p);
+                        _solvedTable[index(i,j)].units[2].append(p);
                     }
                 }
             }
@@ -125,13 +121,13 @@ void Solver::initSolvedTable()
             int value = _grid->getValue(i, j);
             if (value != 0)
             {
-                (*_solvedTable)[index(i, j)].possibleValues.clear();
-                (*_solvedTable)[index(i, j)].possibleValues.append(value);
-                (*_solvedTable)[index(i, j)].assigned = true;
+                _solvedTable[index(i, j)].possibleValues.clear();
+                _solvedTable[index(i, j)].possibleValues.append(value);
+                _solvedTable[index(i, j)].assigned = true;
 
-                for (Pos & peer : (*_solvedTable)[index(i,j)].peers)
+                for (Pos & peer : _solvedTable[index(i,j)].peers)
                 {
-                    (*_solvedTable)[index(peer.x, peer.y)].possibleValues.removeAll(value);
+                    _solvedTable[index(peer.x, peer.y)].possibleValues.removeAll(value);
                 }
             }
         }
@@ -141,14 +137,14 @@ void Solver::initSolvedTable()
 bool Solver::solve()
 {
     _solvedTable = backtrackingSearch(_solvedTable);
-    return _solvedTable != nullptr;
+    return _solvedTable.length() != 0;
 }
 
 int Solver::getCorrectValue(int i, int j) const
 {
-    if (_solvedTable)
+    if (_solvedTable.length() > 0)
     {
-        return (*_solvedTable)[index(i, j)].possibleValues[0];
+        return _solvedTable[index(i, j)].possibleValues[0];
     }
     return 0;
 }
@@ -190,27 +186,27 @@ QList<int> Solver::getCurrentlyAvailableValues(int l, int c) const
     return values;
 }
 
-QVector<Solver::Cell> *Solver::eliminateFC(QVector<Cell> *branch, Solver::Pos &p, int value)
+QVector<Solver::Cell> Solver::eliminateFC(QVector<Cell> branch, Solver::Pos &p, int value)
 {
-    (*branch)[index(p.x, p.y)].possibleValues.removeAll(value);
+    branch[index(p.x, p.y)].possibleValues.removeAll(value);
     return branch;
 }
 
-QVector<Solver::Cell> *Solver::assignFC(QVector<Cell> *branch, Solver::Pos &p, int value)
+QVector<Solver::Cell> Solver::assignFC(QVector<Cell> branch, Solver::Pos &p, int value)
 {
     for (int k = 0; k<SIZE; k++)
     {
         if (k != p.x)
         {
-            (*branch)[index(k,p.y)].possibleValues.removeAll(value);
+            branch[index(k,p.y)].possibleValues.removeAll(value);
         }
         if (k != p.y)
         {
-            (*branch)[index(p.x,k)].possibleValues.removeAll(value);
+            branch[index(p.x,k)].possibleValues.removeAll(value);
         }
-        if ((*branch)[index(k,p.y)].possibleValues.length() == 0 || (*branch)[index(p.x,k)].possibleValues.length() == 0)
+        if (branch[index(k,p.y)].possibleValues.length() == 0 || branch[index(p.x,k)].possibleValues.length() == 0)
         {
-            return nullptr;
+            return QVector<Cell>();
         }
     }
 
@@ -223,27 +219,27 @@ QVector<Solver::Cell> *Solver::assignFC(QVector<Cell> *branch, Solver::Pos &p, i
             int y = l + (p.y / boxSize) * boxSize;
             if (x != p.x || y != p.y)
             {
-                (*branch)[index(x,y)].possibleValues.removeAll(value);
+                branch[index(x,y)].possibleValues.removeAll(value);
             }
-            if ((*branch)[index(x,y)].possibleValues.length() == 0)
+            if (branch[index(x,y)].possibleValues.length() == 0)
             {
-                return nullptr;
+                return QVector<Cell>();
             }
         }
     }
 
-    (*branch)[index(p.x,p.y)].possibleValues = QList<int>({value});
-    (*branch)[index(p.x,p.y)].assigned = true;
+    branch[index(p.x,p.y)].possibleValues = QList<int>({value});
+    branch[index(p.x,p.y)].assigned = true;
     return branch;
 }
 
-QVector<Solver::Cell> *Solver::backtrackingSearch(QVector<Solver::Cell> * branch)
+QVector<Solver::Cell> Solver::backtrackingSearch(QVector<Solver::Cell> branch)
 {
-    QVector<Cell> * ret = new QVector<Cell>(SIZE*SIZE);
+    QVector<Cell> ret;
 
-    if (branch == nullptr)
+    if (branch.length() == 0)
     {
-        return nullptr;
+        return QVector<Cell>();
     }
     if (isFinish(branch))
     {
@@ -252,34 +248,34 @@ QVector<Solver::Cell> *Solver::backtrackingSearch(QVector<Solver::Cell> * branch
 
     Pos s = heuristic(branch);
 
-    while ((*branch)[index(s.x, s.y)].possibleValues.length() > 0)
+    while (branch[index(s.x, s.y)].possibleValues.length() > 0)
     {
 
         int c = leastConstraintValue(branch, s);
 
         ret = backtrackingSearch(assignFC(clone(branch), s, c));
 
-        if (ret != nullptr)
+        if (ret.length() != 0)
         {
             return ret;
         }
 
         branch = eliminateFC(branch, s, c);
 
-        if (branch == nullptr)
+        if (branch.length() == 0)
         {
-            return nullptr;
+            return QVector<Cell>();
         }
     }
-    return nullptr;
+    return QVector<Cell>();
 }
 
-Solver::Pos Solver::heuristic(const QVector<Solver::Cell> * branch) const
+Solver::Pos Solver::heuristic(const QVector<Solver::Cell> branch) const
 {
     return maxDegree(branch, minimumRemainingValuesList(branch));
 }
 
-QList<Solver::Pos> Solver::minimumRemainingValuesList(const QVector<Solver::Cell> * branch) const
+QList<Solver::Pos> Solver::minimumRemainingValuesList(const QVector<Solver::Cell> branch) const
 {
     int min = SIZE + 1;
     QList<Pos> list;
@@ -287,7 +283,7 @@ QList<Solver::Pos> Solver::minimumRemainingValuesList(const QVector<Solver::Cell
     {
         for (int j = 0; j < SIZE; j++)
         {
-            if ((!((*branch)[index(i, j)].assigned)) && ((*branch)[index(i, j)].possibleValues.length() == min))
+            if ((!(branch[index(i, j)].assigned)) && (branch[index(i, j)].possibleValues.length() == min))
             {
                 Pos p;
                 p.x = i;
@@ -295,13 +291,13 @@ QList<Solver::Pos> Solver::minimumRemainingValuesList(const QVector<Solver::Cell
                 list.append(p);
                 continue;
             }
-            if ((!((*branch)[index(i, j)].assigned)) && ((*branch)[index(i, j)].possibleValues.length() < min))
+            if ((!(branch[index(i, j)].assigned)) && (branch[index(i, j)].possibleValues.length() < min))
             {
                 Pos p;
                 p.x = i;
                 p.y = j;
                 list.clear();
-                min = (*branch)[index(i, j)].possibleValues.length();
+                min = branch[index(i, j)].possibleValues.length();
                 list.append(p);
             }
 
@@ -310,16 +306,16 @@ QList<Solver::Pos> Solver::minimumRemainingValuesList(const QVector<Solver::Cell
     return list;
 }
 
-Solver::Pos Solver::maxDegree(const QVector<Solver::Cell> * branch, QList<Solver::Pos> mrvs) const
+Solver::Pos Solver::maxDegree(const QVector<Solver::Cell> branch, QList<Solver::Pos> mrvs) const
 {
     int deg = -1;
     Pos p;
     for (int i = 0; i < mrvs.length(); i++)
     {
         int count = 0;
-        for (int k = 0; k < (*branch)[index(mrvs[i].x, mrvs[i].y)].peers.length(); k++)
+        for (int k = 0; k < branch[index(mrvs[i].x, mrvs[i].y)].peers.length(); k++)
         {
-            if (!(*branch)[index((*branch)[index(mrvs[i].x, mrvs[i].y)].peers[k].y, (*branch)[index(mrvs[i].x, mrvs[i].y)].peers[k].x)].assigned)
+            if (!branch[index(branch[index(mrvs[i].x, mrvs[i].y)].peers[k].y, branch[index(mrvs[i].x, mrvs[i].y)].peers[k].x)].assigned)
             {
                 count++;
             }
@@ -333,9 +329,9 @@ Solver::Pos Solver::maxDegree(const QVector<Solver::Cell> * branch, QList<Solver
     return p;
 }
 
-int Solver::leastConstraintValue(const QVector<Solver::Cell> * branch, Solver::Pos variablePosition) const
+int Solver::leastConstraintValue(const QVector<Solver::Cell> branch, Solver::Pos variablePosition) const
 {
-    int len = (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues.length();
+    int len = branch[index(variablePosition.x, variablePosition.y)].possibleValues.length();
     QVector<int> arr(len);
 
     for (int i = 0; i < len; i++)
@@ -345,26 +341,26 @@ int Solver::leastConstraintValue(const QVector<Solver::Cell> * branch, Solver::P
 
     for (int i = 0; i < len; i++)
     {
-        for (int j = 0; j < (*branch)[index(variablePosition.x, variablePosition.y)].peers.length(); j++)
+        for (int j = 0; j < branch[index(variablePosition.x, variablePosition.y)].peers.length(); j++)
         {
-            if ((*branch)[index((*branch)[index(variablePosition.x, variablePosition.y)].peers[j].x,
-                                (*branch)[index(variablePosition.x, variablePosition.y)].peers[j].y)].possibleValues.contains(
-                        (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues[i]))
+            if (branch[index(branch[index(variablePosition.x, variablePosition.y)].peers[j].x,
+                                branch[index(variablePosition.x, variablePosition.y)].peers[j].y)].possibleValues.contains(
+                        branch[index(variablePosition.x, variablePosition.y)].possibleValues[i]))
             {
                 arr[i]++;
             }
         }
     }
-    return (*branch)[index(variablePosition.x, variablePosition.y)].possibleValues[getMinIndex(arr)];
+    return branch[index(variablePosition.x, variablePosition.y)].possibleValues[getMinIndex(arr)];
 }
 
-bool Solver::isFinish(const QVector<Solver::Cell> * branch) const
+bool Solver::isFinish(const QVector<Solver::Cell> branch) const
 {
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
-            if (!(*branch)[index(i, j)].assigned)
+            if (!branch[index(i, j)].assigned)
             {
                 return false;
             }
@@ -373,24 +369,24 @@ bool Solver::isFinish(const QVector<Solver::Cell> * branch) const
     return true;
 }
 
-QVector<Solver::Cell> * Solver::clone(const QVector<Solver::Cell> * source) const
+QVector<Solver::Cell> Solver::clone(const QVector<Solver::Cell> source) const
 {
-    QVector<Cell> * ret = new QVector<Cell>(SIZE * SIZE);
+    QVector<Cell> ret = QVector<Cell>(SIZE * SIZE);
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
             Cell c;
-            c.assigned = (*source)[index(i, j)].assigned;
-            c.possibleValues = QList<int>((*source)[index(i, j)].possibleValues);
-            c.peers = QList<Pos>((*source)[index(i, j)].peers);
+            c.assigned = source[index(i, j)].assigned;
+            c.possibleValues = QList<int>(source[index(i, j)].possibleValues);
+            c.peers = QList<Pos>(source[index(i, j)].peers);
 
             for (int k = 0; k < 3; k++)
             {
-                c.units[k] = QList<Pos>((*source)[index(i, j)].units[k]);
+                c.units[k] = QList<Pos>(source[index(i, j)].units[k]);
             }
 
-            (*ret)[index(i, j)] = c;
+            ret[index(i, j)] = c;
         }
     }
     return ret;
