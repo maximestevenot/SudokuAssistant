@@ -13,11 +13,7 @@
 namespace SudokuAssistant {
 namespace Model {
 
-Grid::Grid()
-{
-}
-
-Grid::Grid(QStringList initList) : Grid()
+Grid::Grid(QStringList initList)
 {
     load(initList);
 }

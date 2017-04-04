@@ -57,7 +57,7 @@ public slots:
 private:
     Model::Grid * _grid = nullptr;
     Solver * _solver = nullptr;
-    Difficulty _currentDifficulty;
+    Difficulty _currentDifficulty = Difficulty_Medium;
     bool _userShouldSave = false;
 };
 

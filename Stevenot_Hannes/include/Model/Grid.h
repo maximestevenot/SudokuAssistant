@@ -28,7 +28,7 @@ class Grid : QObject
 public:
     const static int SIZE = 9;
 
-    Grid();
+    Grid() = default;
     Grid(QStringList);
 
     int getValue(int i, int j) const;

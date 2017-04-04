@@ -18,10 +18,6 @@ int main(int argc, char *argv[])
 
     if (QLocale::system().language() == QLocale::French)
     {
-        QTranslator * qtTranslator = new QTranslator();
-        qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-        a.installTranslator(qtTranslator);
-
         QTranslator * appTranslator = new QTranslator();
         appTranslator->load("translations/SudokuAssistant_frFR.qm", ":/translations");
         a.installTranslator(appTranslator);

@@ -20,7 +20,7 @@ const QColor SudokuBox::DefaultBackgroundColor = QColor(Qt::white);
 const QColor SudokuBox::HighlightedBackgroundColor = QColor(Qt::green);
 const QColor SudokuBox::WrongBackgroundColor = QColor(Qt::red);
 
-SudokuBox::SudokuBox(int i, int j, int value, QWidget *parent) : QWidget(parent)
+SudokuBox::SudokuBox(int i, int j, int value, QWidget * parent) : QWidget(parent)
 {
     _i = i;
     _j = j;

@@ -19,7 +19,7 @@ using namespace Model;
 
 const QString Controller::Difficulty_Level[] = { tr("Easy"), tr("Medium"), tr("Hard"), tr("Insane") };
 
-Controller::Controller() : QObject()
+Controller::Controller()
 {
     _grid = GridLoader::getNewGrid(_currentDifficulty);
     _solver = new Solver(_grid);
@@ -29,6 +29,7 @@ Controller::Controller() : QObject()
 Controller::~Controller()
 {
     delete _grid;
+    delete _solver;
 }
 
 Grid * Controller::getGrid() const
