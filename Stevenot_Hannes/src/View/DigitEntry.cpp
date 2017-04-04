@@ -71,7 +71,7 @@ void DigitEntry::initButtons()
         }
     }
 
-    QPushButton* clearButton = new QPushButton("Clear");
+    QPushButton* clearButton = new QPushButton(tr("Clear"));
     grid->addWidget(clearButton, 3, 0, 3, 0);
 
     connect(group, SIGNAL(buttonClicked(int)), this, SLOT(onDigitButtonClicked(int)));
