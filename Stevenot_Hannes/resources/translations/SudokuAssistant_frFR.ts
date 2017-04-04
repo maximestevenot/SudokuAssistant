@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>SudokuAssistant::Logic::Controller</name>
     <message>
@@ -59,19 +59,19 @@
     </message>
     <message>
         <source>Grid #</source>
-        <translation type="vanished">Grille</translation>
+        <translation>Grille</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="vanished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <source>Game</source>
-        <translation type="vanished">Jeu</translation>
+        <translation>Jeu</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="vanished">Aide</translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.ui" line="206"/>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>Check &amp;Grid</source>
-        <translation type="vanished">Vérifier la grille</translation>
+        <translation>Vérifier la grille</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.ui" line="299"/>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>Show Hint</source>
-        <translation type="vanished">Donner un indice</translation>
+        <translation>Donner un indice</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.ui" line="314"/>
@@ -207,34 +207,54 @@
         <translation>A propos...</translation>
     </message>
     <message>
-        <location filename="../../src/View/MainWindow.cpp" line="92"/>
-        <location filename="../../src/View/MainWindow.cpp" line="104"/>
+        <location filename="../../src/View/MainWindow.cpp" line="61"/>
+        <source>Easy</source>
+        <translation>Facile</translation>
+    </message>
+    <message>
+        <location filename="../../src/View/MainWindow.cpp" line="61"/>
+        <source>Medium</source>
+        <translation>Moyen</translation>
+    </message>
+    <message>
+        <location filename="../../src/View/MainWindow.cpp" line="61"/>
+        <source>Hard</source>
+        <translation>Difficile</translation>
+    </message>
+    <message>
+        <location filename="../../src/View/MainWindow.cpp" line="61"/>
+        <source>Insane</source>
+        <translation>Extrême</translation>
+    </message>
+    <message>
+        <location filename="../../src/View/MainWindow.cpp" line="94"/>
+        <location filename="../../src/View/MainWindow.cpp" line="106"/>
         <source>Sudoku (*.sds);;All Files(*)</source>
         <translation>Sudoku (*.sds);;Tous les fichiers(*)</translation>
     </message>
     <message>
-        <location filename="../../src/View/MainWindow.cpp" line="139"/>
+        <location filename="../../src/View/MainWindow.cpp" line="141"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="../../src/View/MainWindow.cpp" line="140"/>
+        <location filename="../../src/View/MainWindow.cpp" line="142"/>
         <source>Sudoku Assistant
 Copyright (C) ENSICAEN 2016-2017
 Guillaume Hannes, Maxime Stevenot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/View/MainWindow.cpp" line="146"/>
+        <location filename="../../src/View/MainWindow.cpp" line="148"/>
         <source>The board has been modified.</source>
         <translation>La partie n&apos;a pas été sauvegardée.</translation>
     </message>
     <message>
         <source>The document has been modified.</source>
-        <translation type="vanished">La partie n&apos;a pas été sauvegardée.</translation>
+        <translation>La partie n&apos;a pas été sauvegardée.</translation>
     </message>
     <message>
-        <location filename="../../src/View/MainWindow.cpp" line="147"/>
+        <location filename="../../src/View/MainWindow.cpp" line="149"/>
         <source>Do you want to save your changes?</source>
         <translation>Voulez vous sauvegarder vos modifications?</translation>
     </message>
