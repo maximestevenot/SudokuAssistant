@@ -44,7 +44,7 @@
       </font>
      </property>
      <property name="text">
-      <string>CONGRATULATION</string>
+      <string>CONGRATULATIONS</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

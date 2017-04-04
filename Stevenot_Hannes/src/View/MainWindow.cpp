@@ -90,9 +90,14 @@ void MainWindow::onSaveGame()
 
 void MainWindow::onSaveGameAs()
 {
-    _savingPath = QFileDialog::getSaveFileName(this, QString(), QString(),
-                                               tr("Sudoku (*.sds);;All Files(*)"));
-    _controller->saveGame(_savingPath);
+    QString tempPath = QFileDialog::getSaveFileName(this, QString(), QString(),
+                                                    tr("Sudoku (*.sds);;All Files(*)"));
+
+    if (!tempPath.isEmpty())
+    {
+        _savingPath = tempPath;
+        _controller->saveGame(_savingPath);
+    }
 }
 
 void MainWindow::onLoadGame()

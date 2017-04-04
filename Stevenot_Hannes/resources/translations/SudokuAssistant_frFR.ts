@@ -275,8 +275,12 @@ Guillaume Hannes, Maxime Stevenot</source>
         <translation>Sudoku Assistant</translation>
     </message>
     <message>
-        <location filename="../../ui/VictoryWindow.ui" line="47"/>
         <source>CONGRATULATION</source>
+        <translation>FÉLICITATIONS</translation>
+    </message>
+    <message>
+        <location filename="../../ui/VictoryWindow.ui" line="47"/>
+        <source>CONGRATULATIONS</source>
         <translation>FÉLICITATIONS</translation>
     </message>
     <message>
