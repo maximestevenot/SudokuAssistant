@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(close()));
     connect(ui->action_New, SIGNAL(triggered(bool)), this, SLOT(onNewGame()));
-    connect(ui->action_Restart, SIGNAL(triggered(bool)), _controller, SLOT(onClearGrid()));
+    connect(ui->action_Restart, SIGNAL(triggered(bool)), this, SLOT(onRestartGame()));
     connect(ui->action_Open, SIGNAL(triggered(bool)), this, SLOT(onLoadGame()));
     connect(ui->action_Save, SIGNAL(triggered(bool)), this, SLOT(onSaveGame()));
     connect(ui->action_Save_As, SIGNAL(triggered(bool)), this, SLOT(onSaveGameAs()));
@@ -138,6 +138,15 @@ void MainWindow::onShowAboutDialog()
     QMessageBox::about(this,
                        tr("About"),
                        tr("Sudoku Assistant\nCopyright (C) ENSICAEN 2016-2017\nGuillaume Hannes, Maxime Stevenot"));
+}
+
+void MainWindow::onRestartGame()
+{
+    if (_controller->userShouldSave() && !askSaving())
+    {
+        return;
+    }
+    _controller->onClearGrid();
 }
 
 bool MainWindow::askSaving()

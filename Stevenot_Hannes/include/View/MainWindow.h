@@ -40,6 +40,7 @@ public slots:
     void onNewGame();
     void onCheckGrid();
     void onShowAboutDialog();
+    void onRestartGame();
 
 private:
     Ui::MainWindow *ui;
