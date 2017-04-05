@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/grids">
+        <file alias="Easy">grids/Easy.txt</file>
+        <file alias="Hard">grids/Hard.txt</file>
+        <file alias="Insane">grids/Insane.txt</file>
+        <file alias="Medium">grids/Medium.txt</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/hint-icon.png</file>
+        <file>images/victory.jpg</file>
+    </qresource>
+    <qresource prefix="/translations">
+        <file>translations/SudokuAssistant_frFR.qm</file>
+    </qresource>
+</RCC>
