@@ -1,6 +1,6 @@
 # Sudoku Assistant
 
-This school project aims to create a Sudoku games with some tips and validation provided by an artificial intelligency.
+This school project aims to create a Sudoku game with tips and validation provided by an artificial intelligency.
 
 
 ## Getting Started
@@ -26,7 +26,7 @@ Copyright Maxime Stevenot, Guillaume Hannes
 This software is governed by the CeCILL license under French law and
 abiding by the rules of distribution of free software.  You can  use, 
 modify and/or redistribute the software under the terms of the CeCILL
-license as circulated by CEA, CNRS and INRIA in [COPYING](COPYING) 
+license as circulated by CEA, CNRS and INRIA in [LICENSE.md](LICENSE.md) 
 file or at the following URL "http://www.cecill.info". 
 
 As a counterpart to the access to the source code and  rights to copy,
