@@ -1,12 +1,12 @@
-/*
- * Copyright (C) ENSICAEN 2016-2017
- * Authors : Maxime Stevenot, Guillaume Hannes
+/**
+ * Copyright © Maxime Stevenot, Guillaume Hannes
  *
  * This file is part of Sudoku Assistant
  *
- * No portion of this document may be reproduced, copied
- * or revised without written permission of the authors.
+ * This software is governed by the CeCILL license under French law
+ * and abiding by the rules of distribution of free software.
  */
+
 #include "InactiveSudokuBox.h"
 #include <QPainter>
 #include <QPen>

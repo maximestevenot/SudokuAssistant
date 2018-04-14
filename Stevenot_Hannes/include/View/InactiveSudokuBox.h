@@ -1,3 +1,12 @@
+/**
+ * Copyright © Maxime Stevenot, Guillaume Hannes
+ *
+ * This file is part of Sudoku Assistant
+ *
+ * This software is governed by the CeCILL license under French law
+ * and abiding by the rules of distribution of free software.
+ */
+
 #ifndef INACTIVESUDOKUBOX_H
 #define INACTIVESUDOKUBOX_H
 
