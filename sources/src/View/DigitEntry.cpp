@@ -26,9 +26,9 @@ DigitEntry::DigitEntry(int iBox, int jBox, Controller * controller, QWidget *par
     initButtons();
 }
 
-void DigitEntry::onDigitButtonClicked(int buttonId)
+void DigitEntry::onDigitButtonClicked(QAbstractButton * button)
 {
-    emit boxUpdated(_i, _j, buttonId);
+    emit boxUpdated(_i, _j, button->text().toInt());
     close();
 }
 
@@ -74,8 +74,8 @@ void DigitEntry::initButtons()
     QPushButton* clearButton = new QPushButton(tr("Clear"));
     grid->addWidget(clearButton, 3, 0, 3, 0);
 
-    connect(group, SIGNAL(buttonClicked(int)), this, SLOT(onDigitButtonClicked(int)));
-    connect(clearButton, SIGNAL(clicked(bool)), this, SLOT(onClearButtonClicked()));
+    connect(group, &QButtonGroup::buttonClicked, this, &DigitEntry::onDigitButtonClicked);
+    connect(clearButton, &QAbstractButton::clicked, this, &DigitEntry::onClearButtonClicked);
 
     setLayout(grid);
 }

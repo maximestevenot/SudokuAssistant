@@ -19,8 +19,11 @@ int main(int argc, char *argv[])
     if (QLocale::system().language() == QLocale::French)
     {
         QTranslator * appTranslator = new QTranslator();
-        appTranslator->load("translations/SudokuAssistant_frFR.qm", ":/translations");
-        a.installTranslator(appTranslator);
+        bool appTranslatorLoaded = appTranslator->load("translations/SudokuAssistant_frFR.qm", ":/translations");
+        if (appTranslatorLoaded)
+        {
+            a.installTranslator(appTranslator);
+        }
     }
 
     SudokuAssistant::View::MainWindow w;

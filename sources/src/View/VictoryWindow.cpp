@@ -19,7 +19,7 @@ VictoryWindow::VictoryWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setModal(true);
-    connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(ui->pushButton, &QAbstractButton::clicked, this, &QWidget::close);
 }
 
 VictoryWindow::~VictoryWindow()

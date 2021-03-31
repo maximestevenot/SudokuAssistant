@@ -26,7 +26,7 @@ SudokuBoardWidget::SudokuBoardWidget(QWidget * parent) : QWidget(parent)
 {
     _layout = new QGridLayout();
     _layout->setSpacing(0);
-    _layout->setMargin(0);
+    _layout->setContentsMargins(0,0,0,0);
     setLayout(_layout);
 }
 
@@ -38,10 +38,10 @@ void SudokuBoardWidget::initializeWidget(Controller * controller)
     }
 
     _controller = controller;
-    connect(_controller, SIGNAL(gridChanged()), this, SLOT(onGridUpdated()));
-    connect(_controller, SIGNAL(gridUpdated(int,int,int)), this, SLOT(onBoxUpdated(int,int,int)));
-    connect(_controller, SIGNAL(hint(int,int)), this, SLOT(giveHint(int,int)));
-    connect(_controller, SIGNAL(incorrectValue(int,int)), this, SLOT(markBoxAsWrong(int,int)));
+    connect(_controller, &Controller::gridChanged, this, &SudokuBoardWidget::onGridUpdated);
+    connect(_controller, &Controller::gridUpdated, this, &SudokuBoardWidget::onBoxUpdated);
+    connect(_controller, &Controller::hint, this, &SudokuBoardWidget::giveHint);
+    connect(_controller, &Controller::incorrectValue, this, &SudokuBoardWidget::markBoxAsWrong);
     onGridUpdated();
 }
 
@@ -72,7 +72,7 @@ void SudokuBoardWidget::onGridUpdated()
             QGridLayout * littleLayout = new QGridLayout();
             f->setLayout(littleLayout);
             littleLayout->setSpacing(0);
-            littleLayout->setMargin(0);
+            littleLayout->setContentsMargins(0,0,0,0);
 
             for (int k = 0; k < 3; k++)
             {
@@ -99,7 +99,7 @@ void SudokuBoardWidget::onGridUpdated()
                     _boxes[x][y] = box;
 
                     littleLayout->addWidget(box, k,l);
-                    connect(box, SIGNAL(onMouseClicked(int,int)), this, SLOT(onBoxClicked(int,int)));
+                    connect(box, &SudokuBox::onMouseClicked, this, &SudokuBoardWidget::onBoxClicked);
                 }
             }
 

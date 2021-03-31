@@ -34,19 +34,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->_sudokuBoard->initializeWidget(_controller);
 
-    connect(ui->action_Quit, SIGNAL(triggered(bool)), this, SLOT(close()));
-    connect(ui->action_New, SIGNAL(triggered(bool)), this, SLOT(onNewGame()));
-    connect(ui->action_Restart, SIGNAL(triggered(bool)), this, SLOT(onRestartGame()));
-    connect(ui->action_Open, SIGNAL(triggered(bool)), this, SLOT(onLoadGame()));
-    connect(ui->action_Save, SIGNAL(triggered(bool)), this, SLOT(onSaveGame()));
-    connect(ui->action_Save_As, SIGNAL(triggered(bool)), this, SLOT(onSaveGameAs()));
-    connect(ui->action_Check_grid, SIGNAL(triggered(bool)), this, SLOT(onCheckGrid()));
-    connect(ui->_validateButton, SIGNAL(clicked(bool)), this, SLOT(onCheckGrid()));
-    connect(ui->actionShow_Hint, SIGNAL(triggered(bool)), _controller, SLOT(giveHint()));
-    connect(ui->_sudokuBoard, SIGNAL(boxClicked(int,int)), this, SLOT(onBoxUpdateRequested(int,int)));
-    connect(ui->_hintButton, SIGNAL(clicked(bool)), _controller, SLOT(giveHint()));
-    connect(ui->newGameButton, SIGNAL(clicked(bool)), this, SLOT(onNewGame()));
-    connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(onShowAboutDialog()));
+    connect(ui->action_Quit, &QAction::triggered, this, &MainWindow::close);
+    connect(ui->action_New, &QAction::triggered, this, &MainWindow::onNewGame);
+    connect(ui->action_Restart, &QAction::triggered, this, &MainWindow::onRestartGame);
+    connect(ui->action_Open, &QAction::triggered, this, &MainWindow::onLoadGame);
+    connect(ui->action_Save, &QAction::triggered, this, &MainWindow::onSaveGame);
+    connect(ui->action_Save_As, &QAction::triggered, this, &MainWindow::onSaveGameAs);
+    connect(ui->action_Check_grid, &QAction::triggered, this, &MainWindow::onCheckGrid);
+    connect(ui->_validateButton, &QAbstractButton::clicked, this, &MainWindow::onCheckGrid);
+    connect(ui->actionShow_Hint, &QAction::triggered, _controller, &Controller::giveHint);
+    connect(ui->_sudokuBoard, &SudokuBoardWidget::boxClicked, this, &MainWindow::onBoxUpdateRequested);
+    connect(ui->_hintButton, &QAbstractButton::clicked, _controller, &Controller::giveHint);
+    connect(ui->newGameButton, &QAbstractButton::clicked, this, &MainWindow::onNewGame);
+    connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onShowAboutDialog);
     connect(ui->difficultyComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), _controller, [=](int i){ _controller->setDifficulty(static_cast<Controller::Difficulty>(i)); });
 }
 
@@ -70,7 +70,8 @@ void MainWindow::initComboBox()
 void MainWindow::onBoxUpdateRequested(int i, int j)
 {
     View::DigitEntry userInput(i, j, _controller);
-    connect(&userInput, SIGNAL(boxUpdated(int,int,int)), _controller, SLOT(onGridUpdate(int,int,int)));
+    connect(&userInput, &DigitEntry::boxUpdated, _controller, &Controller::onGridUpdate);
+
 
     userInput.move(QCursor::pos());
     userInput.exec();

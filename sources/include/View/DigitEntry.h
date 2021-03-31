@@ -10,6 +10,7 @@
 #ifndef DIGITENTRY_H
 #define DIGITENTRY_H
 
+#include <QAbstractButton>
 #include <QDialog>
 #include <QList>
 #include "Controller.h"
@@ -28,7 +29,7 @@ signals:
     void boxUpdated(int, int, int);
 
 public slots:
-    void onDigitButtonClicked(int);
+    void onDigitButtonClicked(QAbstractButton*);
     void onClearButtonClicked();
 
 private:

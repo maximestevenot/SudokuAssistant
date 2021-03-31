@@ -54,7 +54,7 @@ void ActiveSudokuBox::mousePressEvent(QMouseEvent * evt)
     evt->accept();
 }
 
-void ActiveSudokuBox::enterEvent(QEvent * evt)
+void ActiveSudokuBox::enterEvent(QEnterEvent * evt)
 {
     if (backgroundColor() == defaultBackgroundColor())
     {

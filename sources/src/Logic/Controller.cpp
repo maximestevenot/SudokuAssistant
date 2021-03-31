@@ -23,7 +23,7 @@ Controller::Controller()
 {
     _grid = GridLoader::getNewGrid(_currentDifficulty);
     _solver = new Solver(_grid);
-    connect(_solver, SIGNAL(incorrectValue(int,int)), this, SLOT(onIncorrectValue(int,int)));
+    connect(_solver, &Solver::incorrectValue, this, &Controller::onIncorrectValue);
 }
 
 Controller::~Controller()
