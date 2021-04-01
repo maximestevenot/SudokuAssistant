@@ -2,6 +2,7 @@
 
 This school project aims to create a Sudoku game with tips and validation provided by an artificial intelligency.
 
+![](illustration.png)
 
 ## Getting Started
 
